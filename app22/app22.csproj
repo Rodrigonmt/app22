@@ -60,6 +60,39 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\Homem em um salão de barbearia, fazendo o corte de cabelo e barba _ Foto Grátis.html" />
+	  <MauiImage Remove="Resources\Images\imagem3.webp" />
+	  <MauiImage Remove="Resources\Images\images %281%29.jpg" />
+	  <MauiImage Remove="Resources\Images\images %282%29.jpg" />
+	  <MauiImage Remove="Resources\Images\images.jpg" />
+	  <MauiImage Remove="Resources\Images\images1.jpg" />
+	  <MauiImage Remove="Resources\Images\imgFundo.jpg" />
+	  <MauiImage Remove="Resources\Images\imginicio.svg" />
+	  <MauiImage Remove="Resources\Images\IMG_20231227_232712_308.jpg" />
+	  <MauiImage Remove="Resources\Images\IMG_20231227_233159_969.jpg" />
+	  <MauiImage Remove="Resources\Images\IMG_20231227_233203_691.jpg" />
+	  <MauiImage Remove="Resources\Images\IMG_20231227_233206_395.jpg" />
+	  <MauiImage Remove="Resources\Images\Lavadeira.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\geladeira.jpg" />
+	  <None Remove="Resources\Images\Homem em um salão de barbearia, fazendo o corte de cabelo e barba _ Foto Grátis.html" />
+	  <None Remove="Resources\Images\imagem3.webp" />
+	  <None Remove="Resources\Images\images %281%29.jpg" />
+	  <None Remove="Resources\Images\images %282%29.jpg" />
+	  <None Remove="Resources\Images\images.jpg" />
+	  <None Remove="Resources\Images\images1.jpg" />
+	  <None Remove="Resources\Images\imgFundo.jpg" />
+	  <None Remove="Resources\Images\imginicio.svg" />
+	  <None Remove="Resources\Images\IMG_20231227_232712_308.jpg" />
+	  <None Remove="Resources\Images\IMG_20231227_233159_969.jpg" />
+	  <None Remove="Resources\Images\IMG_20231227_233203_691.jpg" />
+	  <None Remove="Resources\Images\IMG_20231227_233206_395.jpg" />
+	  <None Remove="Resources\Images\Lavadeira.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="FireSharp.Serialization.JsonNet" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
