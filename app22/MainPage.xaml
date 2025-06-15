@@ -3,20 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="app22.MainPage">
 
-    <Grid>
-        <Grid x:Name="teste26"
-              BackgroundColor="Black"
-              HeightRequest="50"
-              VerticalOptions="Center"
-              IsClippedToBounds="True">
-            <Label x:Name="teste25"
-                   Text="MAQFRIO CONSERTOS     MAQFRIO CONSERTOS     MAQFRIO CONSERTOS"
-                   FontSize="24"
-                   TextColor="White"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Center"
-                   LineBreakMode="NoWrap"/>
-        </Grid>
-    </Grid>
+
+    <VerticalStackLayout VerticalOptions="Center" Padding="10" Spacing="10">
+        <Label 
+            Text="Pagina protegida"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Frame>
+            <VerticalStackLayout>
+                <Label Text="Área Protegida" 
+                       FontSize="Large"
+                       HorizontalTextAlignment="Center"/>
+                <Label x:Name="lbl_boasvindas"
+                       HorizontalTextAlignment="Center"/>
+                <Button x:Name="Desconnectar"
+                        HorizontalOptions="Center"
+                        Clicked="Desconnectar_Clicked"/>
+            </VerticalStackLayout>
+        </Frame>
+    </VerticalStackLayout>
+
 
 </ContentPage>

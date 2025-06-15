@@ -9,18 +9,36 @@ public partial class Login : ContentPage
 
     private async void BTN_Entrar_Login_Clicked(object sender, EventArgs e)
     {
-        if (TXTUsuario.Text == "Ro" && TXTSenha.Text == "123")
+        try
         {
-            await Navigation.PushAsync(new MainPage());
+            if (TXTUsuario.Text == "ro" && TXTSenha.Text == "123")
+            {
+                await SecureStorage.Default.SetAsync("usuario_logado", "Rodrigo");
+                App.Current.MainPage = new MainPage();
+            }
+            else
+            {
+                throw new Exception("Senha incorreta");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            await DisplayAlert("Erro de Login", "Usuário ou senha incorretos!", "OK");
+            DisplayAlert("Ops", ex.Message, "Fechar");
         }
+
     }
 
     private async void BTN_ir_cadastro_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Cadastro());
+        try
+        {
+            App.Current.MainPage = new Cadastro();
+
+        }
+        catch (Exception ex)
+        {
+
+            await DisplayAlert("Erro", ex.Message, "Ok");
+        }
     }
 }
