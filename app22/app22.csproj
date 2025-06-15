@@ -60,6 +60,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\Freezer.png" />
 	  <MauiImage Remove="Resources\Images\Homem em um salão de barbearia, fazendo o corte de cabelo e barba _ Foto Grátis.html" />
 	  <MauiImage Remove="Resources\Images\imagem3.webp" />
 	  <MauiImage Remove="Resources\Images\images %281%29.jpg" />
@@ -76,6 +77,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\Freezer.png" />
 	  <None Remove="Resources\Images\geladeira.jpg" />
 	  <None Remove="Resources\Images\Homem em um salão de barbearia, fazendo o corte de cabelo e barba _ Foto Grátis.html" />
 	  <None Remove="Resources\Images\imagem3.webp" />

@@ -30,8 +30,16 @@ namespace app22
                 App.Current.MainPage = new Login();
             }
         }
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            // Ação ao clicar (por exemplo, voltar)
+            App.Current.MainPage = new Login();
+        }
 
+        private void BTNAgendar_Clicked(object sender, EventArgs e)
+        {
 
+        }
 
     }
 
