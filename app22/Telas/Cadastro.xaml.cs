@@ -18,18 +18,25 @@ public partial class Cadastro : ContentPage
             endereco = enderecoEntry.Text,
             senha = senhaEntry.Text,
         };
+        if (senhaEntry.Text != senhaConf.Text)
+        {
+            await DisplayAlert("Erro", "As senhas digitadas não coincidem. Verifique e tente novamente.", "OK");
+        }else
+        {
+            try
+            {
+                var firebase = new FirebaseService();
+                await firebase.GravarPessoaAsync(pessoa);
+                await DisplayAlert("Sucesso", "Usuário cadastrado com sucesso!", "OK");
+                App.Current.MainPage = new Login();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
+        }
 
-        try
-        {
-            var firebase = new GravaDadosUsuario();
-            await firebase.GravarPessoaAsync(pessoa);
-            await DisplayAlert("Sucesso", "Usuário cadastrado com sucesso!", "OK");
-            App.Current.MainPage = new Login();
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Erro", ex.Message, "OK");
-        }
+       
     }
 
     private void BTNVoltar_Clicked(object sender, EventArgs e)

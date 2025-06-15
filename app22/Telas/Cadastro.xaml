@@ -34,7 +34,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="25"/>
                 </Border.StrokeShape>
-                <Entry Placeholder="Confirme sua senha" FontSize="20" HorizontalOptions="Center" PlaceholderColor="Black" VerticalOptions="Center"/>
+                <Entry x:Name="senhaConf" Placeholder="Confirme sua senha" FontSize="20" HorizontalOptions="Center" PlaceholderColor="Black" VerticalOptions="Center"/>
             </Border>
             <Button Text="CADASTRAR" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" WidthRequest="180" Opacity="0.8" x:Name="BTNCadastro" Clicked="BTNCadastro_Clicked"/>
             <Button Text="VOLTAR" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" WidthRequest="100" Opacity="0.8" x:Name="BTNVoltar" Clicked="BTNVoltar_Clicked"/>
