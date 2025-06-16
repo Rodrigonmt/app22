@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="app22.Telas.Login"
-             Title="Login">
+             x:Class="app22.Telas.Login">
     <Grid>
-        <Label Text="(54) 99700-3844" FontAttributes="Bold" FontSize="30" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Start" Padding="30"/>
-        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Start" Padding="80">
-            <Label x:Name="teste"
-               Text="MAQFRIO CONSERTOS"
-               HorizontalOptions="Center"
-               FontSize="30"
-               TextColor="Blue"
-               VerticalTextAlignment="Center"
-               FontAttributes="Bold"/>
-        </HorizontalStackLayout>
         <Image Source="fundo5.png" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Opacity="0.8"/>
-        <Border
-        WidthRequest="320"
-        HeightRequest="420"
-        StrokeShape="RoundRectangle 16"
-        BackgroundColor="WhiteSmoke"
-        HorizontalOptions="Center"
-        VerticalOptions="Center"
-        Padding="32"
-        Opacity="0.9">
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Start" Spacing="5">
+            <Label Text="(54) 99700-3844" FontAttributes="Bold" FontSize="30" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Start"/>
+            <HorizontalStackLayout  HorizontalOptions="Center" VerticalOptions="Start">
+                <Label x:Name="teste1"
+                   Text="MAQFRIO CONSERTOS"
+                   HorizontalOptions="Center"
+                   FontSize="30"
+                   TextColor="Blue"
+                   VerticalTextAlignment="Center"
+                   FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+         </VerticalStackLayout>
+       <Border
+            WidthRequest="320"
+            HeightRequest="420"
+            StrokeShape="RoundRectangle 16"
+            BackgroundColor="WhiteSmoke"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Padding="32"
+            Opacity="0.9">
             <VerticalStackLayout WidthRequest="256" VerticalOptions="Center" HorizontalOptions="Center">
                 <Image Source="https://img.icons8.com/fluent/96/000000/user-male-circle.png" WidthRequest="64" HeightRequest="64"/>
                 <Label Text="Bem-vindo" HorizontalOptions="Center" FontAttributes="Bold" FontSize="22" Margin="0,16,0,8"/>
                 <Label Text="Usuário"
-       FontAttributes="Bold"
-       Margin="0"
-       FontSize="16"/>
+                   FontAttributes="Bold"
+                   Margin="0"
+                   FontSize="16"/>
                 <Border StrokeShape="RoundRectangle 5" BackgroundColor="Transparent">
                     <Entry
                         WidthRequest="224"

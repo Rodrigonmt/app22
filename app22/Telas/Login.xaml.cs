@@ -7,7 +7,24 @@ public partial class Login : ContentPage
 	public Login()
 	{
 		InitializeComponent();
-	}
+        StartMarquee();
+
+    }
+
+    private async void StartMarquee()
+    {
+        while (true)
+        {
+            double larguraTexto = teste1.Width;
+            double larguraTela = this.Width;
+
+            // Começa fora da tela à direita
+            teste1.TranslationX = larguraTela;
+
+            // Move para a esquerda até fora da tela
+            await teste1.TranslateTo(-larguraTexto, 0, 8000, Easing.Linear);
+        }
+    }
 
     private async void BTN_Entrar_Login_Clicked(object sender, EventArgs e)
     {
@@ -27,7 +44,6 @@ public partial class Login : ContentPage
 
         if (pessoa.senha == senhaDigitado)
         {
-            await DisplayAlert("Sucesso", "Senha Correta!", "OK");
             await SecureStorage.Default.SetAsync("usuario_logado", TXTUsuario.Text);
             App.Current.MainPage = new MainPage();
         }
