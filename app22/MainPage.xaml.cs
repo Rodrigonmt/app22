@@ -7,7 +7,8 @@ namespace app22
 {
     public partial class MainPage : ContentPage
     {
-       
+
+        private Button botaoSelecionado = null;
 
         public MainPage()
         {
@@ -38,7 +39,26 @@ namespace app22
 
         private void BTNAgendar_Clicked(object sender, EventArgs e)
         {
+            var botaoClicado = (Button)sender;
 
+            // Desmarca o botão anterior
+            if (botaoSelecionado != null)
+            {
+                botaoSelecionado.BackgroundColor = Colors.Transparent;
+            }
+
+            // Marca o botão atual
+            botaoClicado.BackgroundColor = Colors.Red;
+            botaoClicado.BackgroundColor = Color.FromRgba(211, 211, 211, 0.9);
+
+            // Garante que o botão preencha o espaço (opcional, mas recomendado)
+            botaoClicado.HorizontalOptions = LayoutOptions.Fill;
+            botaoClicado.VerticalOptions = LayoutOptions.Fill;
+            botaoClicado.Padding = new Thickness(0);
+            botaoClicado.Margin = new Thickness(0);
+
+            // Atualiza o selecionado
+            botaoSelecionado = botaoClicado;
         }
 
     }

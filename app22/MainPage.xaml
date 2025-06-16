@@ -5,7 +5,7 @@
 
     <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
         <VerticalStackLayout VerticalOptions="Start" Padding="10" Spacing="0">
-            <HorizontalStackLayout Padding="0,25,0,0" Spacing="240" Margin="2" HorizontalOptions="Center" VerticalOptions="Start">
+            <HorizontalStackLayout Spacing="240" Margin="2" HorizontalOptions="Center" VerticalOptions="Start">
                 <Button ImageSource="voltar.png" BackgroundColor="Transparent" WidthRequest="60" x:Name="Desconnectar" Clicked="ImageButton_Clicked"/>
                 <ImageButton Source="desconectar.png"
                      WidthRequest="32"
@@ -45,7 +45,12 @@
                     </Frame>
                 </VerticalStackLayout>
             </Frame>
-            <Label Text="Selecione o equipamento com defeito" FontSize="22" HorizontalOptions="Center"/>
+            <Border>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Label Text="Selecione o equipamento com defeito" FontSize="18" HorizontalOptions="Center"/>
+            </Border>
             
             <HorizontalStackLayout Padding="10" Spacing="24">
                 <VerticalStackLayout>
