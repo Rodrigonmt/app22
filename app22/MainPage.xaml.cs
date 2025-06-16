@@ -2,6 +2,7 @@
 using Microsoft.Maui.Controls;
 using app22.Telas;
 using app22.Classes;
+using Microsoft.Maui.Platform;
 
 namespace app22
 {
@@ -37,7 +38,7 @@ namespace app22
             App.Current.MainPage = new Login();
         }
 
-        private void BTNAgendar_Clicked(object sender, EventArgs e)
+        private async void BTNAgendar_Clicked(object sender, EventArgs e)
         {
             var botaoClicado = (Button)sender;
 
@@ -59,6 +60,45 @@ namespace app22
 
             // Atualiza o selecionado
             botaoSelecionado = botaoClicado;
+
+            try
+            {
+                var botaoSelecionadoTexto = ((Button)sender).Text;
+
+                var dataSelecionada = DataAgendamento.Date.ToString("yyyy-MM-dd");
+                var horaSelecionada = HoraAgendamento.Time.ToString(@"hh\:mm");
+
+                var dataAtual = DateTime.Now.ToString("yyyy-MM-dd");
+                var horaAtual = DateTime.Now.ToString("HH:mm");
+
+                var userId = await SecureStorage.GetAsync("usuario_logado");
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    await DisplayAlert("Erro", "Usuário não identificado no dispositivo.", "OK");
+                    return;
+                }
+
+                var agendamento = new AgendamentoModel
+                {
+                    Botao = botaoSelecionadoTexto,
+                    DataSelecionada = dataSelecionada,
+                    HoraSelecionada = horaSelecionada,
+                    DataAtual = dataAtual,
+                    HoraAtual = horaAtual
+                };
+
+                var firebaseService = new FirebaseService();
+                await firebaseService.SalvarAgendamentoAsync(userId, agendamento);
+
+                await DisplayAlert("Sucesso", "Agendamento salvo com sucesso!", "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", $"Falha ao salvar: {ex.Message}", "OK");
+            }
+
+
         }
 
     }
