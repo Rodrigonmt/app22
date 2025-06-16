@@ -8,7 +8,7 @@ namespace app22.Classes
 {
     public class AgendamentoModel
     {
-        public string Botao { get; set; }
+        public string Equipamento { get; set; }
         public string DataSelecionada { get; set; }
         public string HoraSelecionada { get; set; }
         public string DataAtual { get; set; }

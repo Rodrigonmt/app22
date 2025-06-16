@@ -52,7 +52,7 @@
                 <Label Text="Selecione o equipamento com defeito" FontSize="18" HorizontalOptions="Center"/>
             </Border>
             
-            <HorizontalStackLayout Padding="10" Spacing="24">
+            <HorizontalStackLayout Padding="10" Spacing="29">
                 <VerticalStackLayout>
                     <Label Text="Geladeira" HorizontalOptions="Center" FontSize="18"/>
                     <Border 
@@ -74,8 +74,10 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center"
                                 Padding="10"
+                                Text="Geladeira"
+                                TextColor="Transparent"
                                 x:Name="BTNGeladeira"
-                                Clicked="BTNAgendar_Clicked"/>
+                                Clicked="MarcarBotao_Clicked"/>
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
@@ -100,8 +102,10 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center"
                                 Padding="10"
+                                Text="Maquina de Lavar"
+                                TextColor="Transparent"
                                 x:Name="BTNLavadeira"
-                                Clicked="BTNAgendar_Clicked"/>
+                                Clicked="MarcarBotao_Clicked"/>
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
@@ -127,8 +131,10 @@
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
                                Padding="10"
+                               Text="Forno"
+                               TextColor="Transparent"
                                x:Name="BTNForno"
-                               Clicked="BTNAgendar_Clicked"/>
+                               Clicked="MarcarBotao_Clicked"/>
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
@@ -157,8 +163,10 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center"
                                 Padding="10"
+                                Text="Congelador"
+                                TextColor="Transparent"
                                 x:Name="BTNCongelador"
-                                Clicked="BTNAgendar_Clicked"/>
+                                Clicked="MarcarBotao_Clicked"/>
                         </Grid>
                     </Border>
 
@@ -185,8 +193,10 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center"
                                 Padding="10"
+                                Text="Ar condicionado"
+                                TextColor="Transparent"
                                 x:Name="BTNArcondicionado"
-                                Clicked="BTNAgendar_Clicked"/>
+                                Clicked="MarcarBotao_Clicked"/>
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
@@ -212,8 +222,10 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="Start"
                                 Padding="10"
+                                Text="Outros"
+                                TextColor="Transparent"
                                 x:Name="BTNOutros"
-                                Clicked="BTNAgendar_Clicked"/>
+                                Clicked="MarcarBotao_Clicked"/>
                         </Grid>
                     </Border>
                 </VerticalStackLayout>

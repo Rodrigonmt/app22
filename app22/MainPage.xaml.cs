@@ -9,7 +9,7 @@ namespace app22
     public partial class MainPage : ContentPage
     {
 
-        private Button botaoSelecionado = null;
+        private Button botaoSelecionado;
 
         public MainPage()
         {
@@ -38,7 +38,7 @@ namespace app22
             App.Current.MainPage = new Login();
         }
 
-        private async void BTNAgendar_Clicked(object sender, EventArgs e)
+        private void MarcarBotao_Clicked(object sender, EventArgs e)
         {
             var botaoClicado = (Button)sender;
 
@@ -60,10 +60,19 @@ namespace app22
 
             // Atualiza o selecionado
             botaoSelecionado = botaoClicado;
+        }
+
+        private async void BTNAgendar_Clicked(object sender, EventArgs e)
+        {
+            if (botaoSelecionado==null)
+            {
+                DisplayAlert("Erro", "Favor selecionar o equipamento com defeito", "Ok");
+                return;
+            }
 
             try
             {
-                var botaoSelecionadoTexto = ((Button)sender).Text;
+                var botaoSelecionadoTexto = botaoSelecionado?.Text ?? "Nenhum";
 
                 var dataSelecionada = DataAgendamento.Date.ToString("yyyy-MM-dd");
                 var horaSelecionada = HoraAgendamento.Time.ToString(@"hh\:mm");
@@ -81,7 +90,7 @@ namespace app22
 
                 var agendamento = new AgendamentoModel
                 {
-                    Botao = botaoSelecionadoTexto,
+                    Equipamento = botaoSelecionadoTexto,
                     DataSelecionada = dataSelecionada,
                     HoraSelecionada = horaSelecionada,
                     DataAtual = dataAtual,

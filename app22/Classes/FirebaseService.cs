@@ -64,7 +64,7 @@ namespace app22.Classes
             var json = JsonSerializer.Serialize(agendamento);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var url = $"https://agendaluiz-default-rtdb.firebaseio.com/{userId}/{agendamentoId}.json";
+            var url = $"https://agendaluiz-default-rtdb.firebaseio.com/{"Agendamentos"}/{userId}/{agendamentoId}.json";
             var response = await _httpClient.PutAsync(url, content);
 
             if (!response.IsSuccessStatusCode)

@@ -33,26 +33,28 @@
        FontSize="16"/>
                 <Border StrokeShape="RoundRectangle 5" BackgroundColor="Transparent">
                     <Entry
-            WidthRequest="224"
-            HeightRequest="40"
-            HorizontalOptions="Start"
-            Placeholder="Digite seu usuário"
-            BackgroundColor="Transparent"
-            TextColor="Black"
-            x:Name="TXTUsuario"/>
+                        WidthRequest="224"
+                        HeightRequest="40"
+                        HorizontalOptions="Start"
+                        Placeholder="Digite seu usuário"
+                        BackgroundColor="Transparent"
+                        TextColor="Black"
+                        x:Name="TXTUsuario"
+                        Text="Amanda"/>
                 </Border>
                 <Label Text="Senha"
-            FontAttributes="Bold"
-            Margin="0"
-            FontSize="16"/>
+                    FontAttributes="Bold"
+                    Margin="0"
+                    FontSize="16"/>
                 <Border StrokeShape="RoundRectangle 5">
                     <Entry
-            WidthRequest="224"
-            HeightRequest="40"
-            HorizontalOptions="Start"
-            Placeholder="Digite sua senha"
-            BackgroundColor="Transparent"
-            x:Name="TXTSenha"/>
+                        WidthRequest="224"
+                        HeightRequest="40"
+                        HorizontalOptions="Start"
+                        Placeholder="Digite sua senha"
+                        BackgroundColor="Transparent"
+                        x:Name="TXTSenha"
+                        Text="123"/>
                 </Border>
                 <Button WidthRequest="260" HeightRequest="40" Text="Entrar" HorizontalOptions="Center" Margin="0,8,0,8" x:Name="BTN_Entrar_Login" Clicked="BTN_Entrar_Login_Clicked"/>
                 <HorizontalStackLayout Margin="10">
