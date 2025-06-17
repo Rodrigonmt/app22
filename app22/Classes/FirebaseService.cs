@@ -70,5 +70,16 @@ namespace app22.Classes
             if (!response.IsSuccessStatusCode)
                 throw new Exception("Erro ao salvar agendamento");
         }
+
+        public async Task<List<AgendamentoModel>> ObterAgendamentosAsync(string nomeUsuario)
+        {
+            var client = new HttpClient();
+            var url = $"https://agendaluiz-default-rtdb.firebaseio.com/{nomeUsuario}.json";
+
+            var response = await client.GetStringAsync(url);
+            var resultado = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, AgendamentoModel>>(response);
+
+            return resultado?.Values.ToList() ?? new List<AgendamentoModel>();
+        }
     }
 }

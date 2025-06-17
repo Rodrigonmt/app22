@@ -101,6 +101,7 @@ namespace app22
                 await firebaseService.SalvarAgendamentoAsync(userId, agendamento);
 
                 await DisplayAlert("Sucesso", "Agendamento salvo com sucesso!", "OK");
+                App.Current.MainPage = new Chamados();
             }
             catch (Exception ex)
             {
