@@ -41,6 +41,6 @@ public partial class Cadastro : ContentPage
 
     private void BTNVoltar_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new Login();
+        App.Current.MainPage = new NavegarMenus();
     }
 }

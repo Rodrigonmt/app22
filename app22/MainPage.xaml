@@ -3,19 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="app22.MainPage">
 
-    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
-        <VerticalStackLayout VerticalOptions="Start" Padding="10" Spacing="0">
-            <HorizontalStackLayout Spacing="240" Margin="2" HorizontalOptions="Center" VerticalOptions="Start">
-                <Button ImageSource="voltar.png" BackgroundColor="Transparent" WidthRequest="60" x:Name="Desconnectar" Clicked="ImageButton_Clicked"/>
-                <ImageButton Source="desconectar.png"
-                     WidthRequest="32"
-                     HeightRequest="32"
-                     BackgroundColor="Transparent"
-                     Clicked="Desconnectar_Clicked"
-                     HorizontalOptions="Start"
-                     VerticalOptions="Start"
-                     Margin="16"/>
-            </HorizontalStackLayout>
+    <Grid>
+        <VerticalStackLayout VerticalOptions="Start">
+            <Button ImageSource="voltar.png" BackgroundColor="Transparent" WidthRequest="80" x:Name="Desconnectar" Clicked="ImageButton_Clicked"/>
             <Frame BorderColor="Transparent" BackgroundColor="Transparent">
                 <VerticalStackLayout Padding="0,0,0,0" Margin="0,0,0,0">
                     <Border StrokeThickness="2" WidthRequest="350" HeightRequest="40" Opacity="0.8" BackgroundColor="lightgray">

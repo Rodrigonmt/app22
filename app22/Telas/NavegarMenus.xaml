@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="app22.Telas.NavegarMenus"
+             Title="NavegarMenus">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="25">
+            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="50">
+                <Label Text="Bem-vindo(a)"
+                           FontSize="26"
+                           FontAttributes="Bold"
+                           TextColor="#2c3e50"
+                           HorizontalOptions="Center"
+                           x:Name="BemVindoLabel"/>
+                <ImageButton Source="desconectar.png"
+                     WidthRequest="32"
+                     HeightRequest="32"
+                     BackgroundColor="Transparent"
+                     Clicked="Desconnectar_Clicked"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            
+
+            <!-- Botão: Criar Chamado -->
+            <Frame CornerRadius="20" Padding="10" BackgroundColor="White" HasShadow="True">
+                <Button Text="🛠️  Criar Chamado"
+                        FontSize="20"
+                        BackgroundColor="Transparent"
+                        TextColor="#34495e"
+                        Clicked="OnCriarChamadoClicked"/>
+            </Frame>
+
+            <!-- Botão: Histórico de Chamados -->
+            <Frame CornerRadius="20" Padding="10" BackgroundColor="White" HasShadow="True">
+                <Button Text="📜  Histórico de Chamados"
+                        FontSize="20"
+                        BackgroundColor="Transparent"
+                        TextColor="#34495e"
+                        Clicked="OnHistoricoClicked"/>
+            </Frame>
+
+            <!-- Botão: Vender Produtos -->
+            <Frame CornerRadius="20" Padding="10" BackgroundColor="White" HasShadow="True">
+                <Button Text="💰  Vender Produtos"
+                        FontSize="20"
+                        BackgroundColor="Transparent"
+                        TextColor="#34495e"
+                        Clicked="OnVenderClicked"/>
+            </Frame>
+
+            <!-- Botão: Comprar Produtos -->
+            <Frame CornerRadius="20" Padding="10" BackgroundColor="White" HasShadow="True">
+                <Button Text="🛒  Comprar Produtos"
+                        FontSize="20"
+                        BackgroundColor="Transparent"
+                        TextColor="#34495e"
+                        Clicked="OnComprarClicked"/>
+            </Frame>
+
+            <!-- Botão: Alterar Cadastro -->
+            <Frame CornerRadius="20" Padding="10" BackgroundColor="White" HasShadow="True">
+                <Button Text="✏️  Alterar Cadastro"
+                        FontSize="20"
+                        BackgroundColor="Transparent"
+                        TextColor="#34495e"
+                        Clicked="OnAlterarCadastroClicked"/>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

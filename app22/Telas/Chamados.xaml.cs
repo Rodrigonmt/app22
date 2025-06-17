@@ -3,24 +3,32 @@ using Microsoft.Maui.Controls;
 using app22.Classes;
 using System.Net.Http;
 using System.Collections.ObjectModel;
+using System;
 
 namespace app22.Telas;
 
 public partial class Chamados : ContentPage
 {
     private readonly HttpClient _httpClient = new HttpClient();
+    
+
     public Chamados()
 	{
 
         InitializeComponent();
         CarregarChamadosAsync();
+        
     }
 
     private async Task CarregarChamadosAsync()
     {
+        var mainPage = Application.Current.MainPage as MainPage;
+        string _usuarioLog = mainPage?._usuarioLogado;
+
         try
         {
-            string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/Amanda.json";
+            string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLog}.json";
+            
             var response = await _httpClient.GetStringAsync(url);
 
             var jsonDoc = JsonDocument.Parse(response);
@@ -39,5 +47,10 @@ public partial class Chamados : ContentPage
         {
             await DisplayAlert("Erro", ex.Message, "OK");
         }
+    }
+
+    private async void BTNVoltar_Clicked(object sender, EventArgs e)
+    {
+        App.Current.MainPage = new NavegarMenus();
     }
 }

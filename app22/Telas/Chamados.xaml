@@ -2,21 +2,41 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="app22.Telas.Chamados">
-    <ScrollView>
-        <CollectionView x:Name="ChamadosCollectionView">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Equipamento}" FontAttributes="Bold" FontSize="20"/>
-                            <Label Text="{Binding DataSelecionada}" />
-                            <Label Text="{Binding HoraSelecionada}" />
-                            <Label Text="{Binding DataAtual}" FontSize="12" TextColor="Gray"/>
-                            <Label Text="{Binding HoraAtual}" FontSize="12" TextColor="Gray"/>
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </ScrollView>
+    <VerticalStackLayout>
+        <HorizontalStackLayout Spacing="20" Margin="10">
+            <Frame Padding="0" HasShadow="False" CornerRadius="40" HeightRequest="40" WidthRequest="40" IsClippedToBounds="True" BackgroundColor="Transparent" HorizontalOptions="Center">
+                <ImageButton Source="voltar.png"
+                     BackgroundColor="Transparent"
+                     Clicked="BTNVoltar_Clicked"
+                     HeightRequest="40"
+                     WidthRequest="40"
+                     CornerRadius="40"
+                     Aspect="AspectFill"/>
+            </Frame>
+                <Label Text="Histórico de Chamados"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,10"/>
+            
+        </HorizontalStackLayout>
+        
+        <ScrollView>
+            <CollectionView x:Name="ChamadosCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Equipamento}" FontAttributes="Bold" FontSize="20"/>
+                                <Label Text="{Binding DataSelecionada}" />
+                                <Label Text="{Binding HoraSelecionada}" />
+                                <Label Text="{Binding DataAtual}" FontSize="12" TextColor="Gray"/>
+                                <Label Text="{Binding HoraAtual}" FontSize="12" TextColor="Gray"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>
