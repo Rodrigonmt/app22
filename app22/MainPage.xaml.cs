@@ -10,20 +10,26 @@ namespace app22
     {
 
         private Button botaoSelecionado;
-        public string? _usuarioLogado = null;//variavel aceita valor null com o ?
-        public MainPage()
+        public string? _usuarioLog = null;//variavel aceita valor null com o ?
+        public MainPage(string _usuarioLogado)
         {
             InitializeComponent();
+            _usuarioLog = _usuarioLogado;
+            atualizarBoasVindas();
             //CorrerLetras();
 
-            
-            Task.Run(async () =>
-            {
-                _usuarioLogado = await SecureStorage.Default.GetAsync("usuario_logado");
-                lbl_boasvindas.Text = $"Bem vindo(a) " + _usuarioLogado;
-            });
+
+            //Task.Run(async () =>
+            //{
+            //    _usuarioLogado = await SecureStorage.Default.GetAsync("usuario_logado");
+            //    lbl_boasvindas.Text = $"Bem vindo(a) " + _usuarioLogado;
+            //});
         }
         
+        private void atualizarBoasVindas()
+        {
+            lbl_boasvindas.Text = $"Bem vindo(a) " + _usuarioLog;
+        }
         
         private void ImageButton_Clicked(object sender, EventArgs e)
         {
@@ -94,7 +100,7 @@ namespace app22
                 await firebaseService.SalvarAgendamentoAsync(userId, agendamento);
 
                 await DisplayAlert("Sucesso", "Agendamento salvo com sucesso!", "OK");
-                App.Current.MainPage = new Chamados();
+                App.Current.MainPage = new Chamados(_usuarioLog);
             }
             catch (Exception ex)
             {

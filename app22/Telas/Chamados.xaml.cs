@@ -10,24 +10,23 @@ namespace app22.Telas;
 public partial class Chamados : ContentPage
 {
     private readonly HttpClient _httpClient = new HttpClient();
-    
+    private readonly string _usuarioLogado;
 
-    public Chamados()
+    public Chamados(string usuarioLogado)
 	{
 
         InitializeComponent();
+        _usuarioLogado = usuarioLogado;
         CarregarChamadosAsync();
         
     }
 
     private async Task CarregarChamadosAsync()
     {
-        var mainPage = Application.Current.MainPage as MainPage;
-        string _usuarioLog = mainPage?._usuarioLogado;
 
         try
         {
-            string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLog}.json";
+            string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}.json";
             
             var response = await _httpClient.GetStringAsync(url);
 

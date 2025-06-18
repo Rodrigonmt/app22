@@ -2,31 +2,38 @@ namespace app22.Telas;
 
 public partial class NavegarMenus : ContentPage
 {
-	public NavegarMenus()
+    public string _usuarioLogado = null;//variavel aceita valor null com o ?
+    public NavegarMenus()
 	{
         
         InitializeComponent();
-        AtualizarMensagem();
+
+        CarregarUsuarioAsync();
 
 
     }
 
-    private async void AtualizarMensagem()
+    private async void CarregarUsuarioAsync()
     {
-        var mainPage = Application.Current.MainPage as MainPage;
-        string _usuarioLog = mainPage?._usuarioLogado;
-        BemVindoLabel.Text = $"Bem-vindo(a), {_usuarioLog}!";
+        _usuarioLogado = await SecureStorage.Default.GetAsync("usuario_logado");
+
+        // Agora sim: após o valor ser carregado, atualiza a mensagem
+        AtualizarMensagem();
+    }
+
+    private void AtualizarMensagem()
+    {
+        BemVindoLabel.Text = $"Bem-vindo(a), {_usuarioLogado}!";
     }
 
     private async void OnCriarChamadoClicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new MainPage();
+        App.Current.MainPage = new MainPage(_usuarioLogado);
     }
 
     private async void OnHistoricoClicked(object sender, EventArgs e)
     {
-        DisplayAlert("Esperar", "Esperar", "Esperar");
-        App.Current.MainPage = new Chamados();
+        App.Current.MainPage = new Chamados(_usuarioLogado);
     }
 
     private async void OnVenderClicked(object sender, EventArgs e)
