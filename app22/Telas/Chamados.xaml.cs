@@ -36,7 +36,19 @@ public partial class Chamados : ContentPage
             foreach (var item in jsonDoc.RootElement.EnumerateObject())
             {
                 var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
-                chamado.Id = item.Name; // salva o ID (chave do Firebase)
+                chamado.Id = item.Name;
+
+                // Conversão e formatação das datas (se houver valor)
+                if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
+                {
+                    chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
+                }
+
+                if (DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao))
+                {
+                    chamado.DataAtual = dataCriacao.ToString("dd/MM/yyyy");
+                }
+
                 chamados.Add(chamado);
             }
 
