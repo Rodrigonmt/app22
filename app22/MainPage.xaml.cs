@@ -93,7 +93,8 @@ namespace app22
                     DataSelecionada = dataSelecionada,
                     HoraSelecionada = horaSelecionada,
                     DataAtual = dataAtual,
-                    HoraAtual = horaAtual
+                    HoraAtual = horaAtual,
+                    Status = "Pendente"
                 };
 
                 var firebaseService = new FirebaseService();
