@@ -50,7 +50,8 @@ public partial class Cadastro : ContentPage
         {
             await firebase.GravarPessoaAsync(pessoa);
             await DisplayAlert("Sucesso", "Usuário cadastrado com sucesso!", "OK");
-            App.Current.MainPage = new Login();
+            await SecureStorage.Default.SetAsync("usuario_logado", nomeEntry.Text);
+            App.Current.MainPage = new NavegarMenus();
         }
         catch (Exception ex)
         {

@@ -5,23 +5,27 @@
              Title="NavegarMenus">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="25">
-            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="30">
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center" Spacing="10">
                 <Label Text="Bem-vindo(a)"
-                           FontSize="26"
-                           FontAttributes="Bold"
-                           TextColor="#2c3e50"
-                           HorizontalOptions="Center"
-                           x:Name="BemVindoLabel"/>
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   TextColor="#2c3e50"
+                   LineBreakMode="TailTruncation"
+                   HorizontalOptions="Start"
+                   x:Name="BemVindoLabel"
+                   VerticalOptions="Center"
+                   WidthRequest="{OnPlatform Android=320, iOS=300, WinUI=400}" />
+
                 <ImageButton Source="desconectar.png"
                      WidthRequest="32"
                      HeightRequest="32"
                      BackgroundColor="Transparent"
                      Clicked="Desconnectar_Clicked"
-                     HorizontalOptions="Center"
+                     HorizontalOptions="End"
                      VerticalOptions="Center"/>
             </HorizontalStackLayout>
 
-            
+
 
             <!-- Botão: Criar Chamado -->
             <Frame CornerRadius="20" Padding="10" BackgroundColor="White" HasShadow="True">
