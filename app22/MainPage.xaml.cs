@@ -34,7 +34,7 @@ namespace app22
         private void ImageButton_Clicked(object sender, EventArgs e)
         {
             // Ação ao clicar (por exemplo, voltar)
-            App.Current.MainPage = new NavegarMenus();
+            App.Current.MainPage = new NavegarMenus(_usuarioLog);
         }
 
         private void MarcarBotao_Clicked(object sender, EventArgs e)
@@ -79,7 +79,7 @@ namespace app22
                 var dataAtual = DateTime.Now.ToString("yyyy-MM-dd");
                 var horaAtual = DateTime.Now.ToString("HH:mm");
 
-                var userId = await SecureStorage.GetAsync("usuario_logado");
+                var userId = _usuarioLog;
 
                 if (string.IsNullOrEmpty(userId))
                 {

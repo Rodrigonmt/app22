@@ -69,7 +69,7 @@ public partial class Chamados : ContentPage
 
     private async void BTNVoltar_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new NavegarMenus();
+        App.Current.MainPage = new NavegarMenus(_usuarioLogado);
     }
     private void StatusPicker_SelectedIndexChanged(object sender, EventArgs e)
     {

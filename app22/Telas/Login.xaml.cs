@@ -44,8 +44,8 @@ public partial class Login : ContentPage
 
         if (pessoa.senha == senhaDigitado)
         {
-            await SecureStorage.Default.SetAsync("usuario_logado", TXTUsuario.Text);
-            App.Current.MainPage = new NavegarMenus();
+            //await SecureStorage.Default.SetAsync("usuario_logado", TXTUsuario.Text);
+            App.Current.MainPage = new NavegarMenus(TXTUsuario.Text);
         }
         else
         {
@@ -63,7 +63,7 @@ public partial class Login : ContentPage
     {
         try
         {
-            App.Current.MainPage = new Cadastro();
+            App.Current.MainPage = new Cadastro(TXTUsuario.Text);
 
         }
         catch (Exception ex)

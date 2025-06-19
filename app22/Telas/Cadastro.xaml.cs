@@ -4,10 +4,18 @@ namespace app22.Telas;
 
 public partial class Cadastro : ContentPage
 {
-	public Cadastro()
+    private readonly string _usuarioLogado;
+    public Cadastro(string usuarioLogado)
 	{
 		InitializeComponent();
-	}
+        _usuarioLogado = usuarioLogado;
+        verificacamo();
+    }
+
+    public async void verificacamo()
+    {
+        await DisplayAlert("Mensag", $"->{_usuarioLogado}<-", "Ok");
+    }
 
     private async void BTNCadastro_Clicked(object sender, EventArgs e)
     {
@@ -50,8 +58,8 @@ public partial class Cadastro : ContentPage
         {
             await firebase.GravarPessoaAsync(pessoa);
             await DisplayAlert("Sucesso", "Usuário cadastrado com sucesso!", "OK");
-            await SecureStorage.Default.SetAsync("usuario_logado", nomeEntry.Text);
-            App.Current.MainPage = new NavegarMenus();
+            //await SecureStorage.Default.SetAsync("usuario_logado", nomeEntry.Text);
+            App.Current.MainPage = new NavegarMenus(nomeEntry.Text);
         }
         catch (Exception ex)
         {
@@ -63,6 +71,6 @@ public partial class Cadastro : ContentPage
 
     private void BTNVoltar_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new NavegarMenus();
+        App.Current.MainPage = new NavegarMenus(nomeEntry.Text);
     }
 }

@@ -3,11 +3,11 @@ namespace app22.Telas;
 public partial class NavegarMenus : ContentPage
 {
     public string _usuarioLogado = null;//variavel aceita valor null com o ?
-    public NavegarMenus()
+    public NavegarMenus(string usuariologado)
 	{
         
         InitializeComponent();
-
+        _usuarioLogado = usuariologado;
         CarregarUsuarioAsync();
 
 
@@ -15,7 +15,7 @@ public partial class NavegarMenus : ContentPage
 
     private async void CarregarUsuarioAsync()
     {
-        _usuarioLogado = await SecureStorage.Default.GetAsync("usuario_logado");
+        //_usuarioLogado = await SecureStorage.Default.GetAsync("usuario_logado");
 
         // Agora sim: após o valor ser carregado, atualiza a mensagem
         AtualizarMensagem();
@@ -48,7 +48,7 @@ public partial class NavegarMenus : ContentPage
 
     private async void OnAlterarCadastroClicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new Cadastro();
+        App.Current.MainPage = new Cadastro(_usuarioLogado);
     }
 
     private async void Desconnectar_Clicked(object sender, EventArgs e)
