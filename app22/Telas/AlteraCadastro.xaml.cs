@@ -2,19 +2,20 @@ using app22.Classes;
 
 namespace app22.Telas;
 
-public partial class Cadastro : ContentPage
+public partial class AlteraCadastro : ContentPage
 {
-    //private readonly string _usuarioLogado = nomeEntry.Text;
-    public Cadastro()
-	{
-		InitializeComponent();
-        //verificacamo();
+    private readonly string _usuarioLogado = null;
+    public AlteraCadastro(string usuarioLogado)
+    {
+        InitializeComponent();
+        _usuarioLogado = usuarioLogado;
+        verificacamo();
     }
 
-    //public async void verificacamo()
-    //{
-    //    await DisplayAlert("Mensag", $"->{_usuarioLogado}<-", "Ok");
-    //}
+    public async void verificacamo()
+    {
+        await DisplayAlert("Mensag", $"->{_usuarioLogado}<-", "Ok");
+    }
 
     private async void BTNCadastro_Clicked(object sender, EventArgs e)
     {
@@ -70,6 +71,13 @@ public partial class Cadastro : ContentPage
 
     private void BTNVoltar_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new Login();
+        if (_usuarioLogado != null)
+        {
+            App.Current.MainPage = new NavegarMenus(_usuarioLogado);
+        }
+        else
+        {
+            App.Current.MainPage = new Login();
+        }
     }
 }

@@ -30,7 +30,7 @@
                     <Picker x:Name="StatusPicker"
                         Title="Selecionar"
                         WidthRequest="180"
-                        SelectedIndex="1"
+                        SelectedIndex="0"
                         SelectedIndexChanged="StatusPicker_SelectedIndexChanged">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">

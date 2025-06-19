@@ -48,7 +48,7 @@ public partial class NavegarMenus : ContentPage
 
     private async void OnAlterarCadastroClicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new Cadastro(_usuarioLogado);
+        App.Current.MainPage = new AlteraCadastro(_usuarioLogado);
     }
 
     private async void Desconnectar_Clicked(object sender, EventArgs e)

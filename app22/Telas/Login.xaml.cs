@@ -63,7 +63,7 @@ public partial class Login : ContentPage
     {
         try
         {
-            App.Current.MainPage = new Cadastro(TXTUsuario.Text);
+            App.Current.MainPage = new Cadastro();
 
         }
         catch (Exception ex)

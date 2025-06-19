@@ -19,7 +19,14 @@ public partial class Chamados : ContentPage
         InitializeComponent();
         _usuarioLogado = usuarioLogado;
         CarregarChamadosAsync();
-        
+        teste();
+
+
+    }
+
+    private async void teste()
+    {
+        await DisplayAlert("Mensa", $"->{_usuarioLogado}<-","Ok");
     }
 
     private async Task CarregarChamadosAsync()
@@ -30,6 +37,12 @@ public partial class Chamados : ContentPage
             string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}.json";
             
             var response = await _httpClient.GetStringAsync(url);
+
+            if (string.IsNullOrWhiteSpace(response) || response == "null")
+            {
+                await DisplayAlert("Aviso", "Usuário não possui chamados abertos", "OK");
+                return;
+            }
 
             var jsonDoc = JsonDocument.Parse(response);
             var chamados = new ObservableCollection<Chamado>();
@@ -58,7 +71,7 @@ public partial class Chamados : ContentPage
             else
             {
                 // Caso ainda não tenha carregado o Picker (alternativa segura)
-                StatusPicker.SelectedIndex = 1;
+                StatusPicker.SelectedIndex = 0;
             }
         }
         catch (Exception ex)
