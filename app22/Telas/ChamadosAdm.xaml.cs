@@ -17,7 +17,15 @@ public partial class ChamadosAdm : ContentPage
     public ChamadosAdm()
 	{
 		InitializeComponent();
-        _ = CarregarUsuariosAsync(); // adiciona essa linha
+        StatusPicker.SelectedIndex = 0; // Seleciona "Todos"
+        EquipamentoPicker.SelectedIndex = 0;
+
+        // Define intervalo de 30 dias antes e depois da data atual
+        DataAgendadaInicio.Date = DateTime.Today.AddDays(-30);
+        DataAgendadaFim.Date = DateTime.Today.AddDays(30);
+        DataCriacaoInicio.Date = DateTime.Today.AddDays(-30);
+
+        _ = CarregarUsuariosAsync();
         _ = CarregarChamadosAsync();
     }
 
@@ -109,45 +117,69 @@ public partial class ChamadosAdm : ContentPage
         _todosChamados.Clear();
         try
         {
-            string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}.json";
+            string url;
+
+            if (UsuarioPicker.SelectedItem?.ToString() == "Todos")
+            {
+                // Buscar todos os usuários
+                url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos.json";
+            }
+            else
+            {
+                _usuarioLogado = UsuarioPicker.SelectedItem?.ToString(); // atualiza localmente
+                url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}.json";
+            }
 
             var response = await _httpClient.GetStringAsync(url);
 
             if (string.IsNullOrWhiteSpace(response) || response == "null")
             {
-                await DisplayAlert("Aviso", "Usuário não possui chamados abertos", "OK");
+                await DisplayAlert("Aviso", "Nenhum chamado encontrado", "OK");
                 return;
             }
 
             var jsonDoc = JsonDocument.Parse(response);
-            var chamados = new ObservableCollection<Chamado>();
 
-            foreach (var item in jsonDoc.RootElement.EnumerateObject())
+            if (UsuarioPicker.SelectedItem?.ToString() == "Todos")
             {
-                var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
-                chamado.Id = item.Name;
+                foreach (var usuario in jsonDoc.RootElement.EnumerateObject())
+                {
+                    foreach (var item in usuario.Value.EnumerateObject())
+                    {
+                        var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
+                        chamado.Id = item.Name;
 
-                if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
-                    chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
+                        if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
+                            chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
 
-                if (DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao))
-                    chamado.DataAtual = dataCriacao.ToString("dd/MM/yyyy");
+                        if (DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao))
+                            chamado.DataAtual = dataCriacao.ToString("dd/MM/yyyy");
 
-                _todosChamados.Add(chamado);
+                        _todosChamados.Add(chamado);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in jsonDoc.RootElement.EnumerateObject())
+                {
+                    var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
+                    chamado.Id = item.Name;
+
+                    if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
+                        chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
+
+                    if (DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao))
+                        chamado.DataAtual = dataCriacao.ToString("dd/MM/yyyy");
+
+                    _todosChamados.Add(chamado);
+                }
             }
 
             ChamadosCollectionView.ItemsSource = _todosChamados;
 
-            // Força o filtro conforme a seleção atual
-            if (StatusPicker.SelectedItem != null)
-            {
-                StatusPicker_SelectedIndexChanged(StatusPicker, EventArgs.Empty);
-            }
-            else
-            {
-                // Caso ainda não tenha carregado o Picker (alternativa segura)
-                StatusPicker.SelectedIndex = 0;
-            }
+            // Aplica o filtro conforme status selecionado
+            StatusPicker_SelectedIndexChanged(StatusPicker, EventArgs.Empty);
         }
         catch (Exception ex)
         {
@@ -187,8 +219,13 @@ public partial class ChamadosAdm : ContentPage
             var jsonDoc = JsonDocument.Parse(response);
             _usuariosDisponiveis = jsonDoc.RootElement.EnumerateObject().Select(u => u.Name).ToList();
 
+            _usuariosDisponiveis.Insert(0, "Todos"); // ? adiciona a opção "Todos" no topo
+
             UsuarioPicker.ItemsSource = _usuariosDisponiveis;
-            UsuarioPicker.SelectedItem = _usuarioLogado; // Seleciona usuário atual por padrão
+            UsuarioPicker.SelectedItem = "Todos"; // ? seleciona "Todos" como padrão
+            _usuarioLogado = null; // ? define para buscar todos os usuários
+
+            await CarregarChamadosAsync(); // recarrega com todos os chamados
         }
         catch (Exception ex)
         {
