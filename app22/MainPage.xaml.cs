@@ -4,6 +4,16 @@ using app22.Telas;
 using app22.Classes;
 using Microsoft.Maui.Platform;
 
+/*Status serviços
+Pendente
+Em Andamento
+Coleta efetuada
+Concluído
+Cancelado
+Reagendado
+ 
+*/
+
 namespace app22
 {
     public partial class MainPage : ContentPage

@@ -4,6 +4,7 @@ using app22.Classes;
 using System.Net.Http;
 using System.Collections.ObjectModel;
 using System;
+using System.Text;
 
 namespace app22.Telas;
 
@@ -22,6 +23,44 @@ public partial class Chamados : ContentPage
         teste();
 
 
+    }
+
+    private async void CancelarChamado_Clicked(object sender, EventArgs e)
+    {
+        if (sender is Button btn && btn.BindingContext is Chamado chamado)
+        {
+            bool confirmar = await DisplayAlert("Confirmar", $"Deseja cancelar o chamado do equipamento '{chamado.Equipamento}'?", "Sim", "Não");
+
+            if (!confirmar)
+                return;
+
+            try
+            {
+                string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}/{chamado.Id}/Status.json";
+                var content = new StringContent("\"Cancelado\"", Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    chamado.Status = "Cancelado";
+
+                    // Atualizar CollectionView
+                    ChamadosCollectionView.ItemsSource = null;
+                    ChamadosCollectionView.ItemsSource = _todosChamados;
+
+                    await DisplayAlert("Sucesso", "Chamado cancelado com sucesso!", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Erro", "Não foi possível cancelar o chamado.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", $"Erro ao cancelar: {ex.Message}", "OK");
+            }
+        }
     }
 
     private async void teste()

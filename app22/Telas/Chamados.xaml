@@ -76,7 +76,12 @@
                                 <Label Text="Data Criação:" FontAttributes="Bold" FontSize="14" WidthRequest="120"/>
                                 <Label Text="{Binding DataAtual}" FontSize="14" TextColor="Gray"/>
                             </HorizontalStackLayout>
-                            
+                            <Button Text="Cancelar"
+                                BackgroundColor="Red"
+                                TextColor="White"
+                                Clicked="CancelarChamado_Clicked"
+                                HorizontalOptions="End"
+                                Margin="0,10,0,0"/>
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
