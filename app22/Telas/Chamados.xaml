@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:app22.Classes"
              x:Class="app22.Telas.Chamados"
              BackgroundColor="White">
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:StatusToEnabledConverter x:Key="StatusToEnabledConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <Grid RowDefinitions="Auto,*" Padding="10">
 
         <!-- Cabeçalho (não rola) -->
@@ -77,11 +83,29 @@
                                 <Label Text="{Binding DataAtual}" FontSize="14" TextColor="Gray"/>
                             </HorizontalStackLayout>
                             <Button Text="Cancelar"
-                                BackgroundColor="Red"
-                                TextColor="White"
-                                Clicked="CancelarChamado_Clicked"
-                                HorizontalOptions="End"
-                                Margin="0,10,0,0"/>
+        TextColor="White"
+        Clicked="CancelarChamado_Clicked"
+        HorizontalOptions="End"
+        Margin="0,10,0,0"
+        IsEnabled="{Binding Status, Converter={StaticResource StatusToEnabledConverter}}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button"
+                                         Binding="{Binding Status}"
+                                         Value="Pendente">
+                                        <Setter Property="BackgroundColor" Value="Red" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button"
+                                         Binding="{Binding Status}"
+                                         Value="Cancelado">
+                                        <Setter Property="BackgroundColor" Value="Gray" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button"
+                                         Binding="{Binding Status}"
+                                         Value="Concluído">
+                                        <Setter Property="BackgroundColor" Value="Gray" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
