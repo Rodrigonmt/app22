@@ -20,11 +20,26 @@
                                  Aspect="AspectFill"/>
                 </Frame>
 
-                <Label Text="Histórico de Chamados"
+                <Label Text="Chamados"
                        FontSize="24"
                        FontAttributes="Bold"
                        VerticalOptions="Center"
                        HorizontalOptions="StartAndExpand"/>
+                <HorizontalStackLayout Margin="0,10">
+                    <Label Text="Status:" VerticalOptions="Center" FontAttributes="Bold"/>
+                    <Picker x:Name="StatusPicker"
+                        Title="Selecionar"
+                        WidthRequest="180"
+                        SelectedIndex="1"
+                        SelectedIndexChanged="StatusPicker_SelectedIndexChanged">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Todos</x:String>
+                                <x:String>Pendente</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </HorizontalStackLayout>
             </HorizontalStackLayout>
         </VerticalStackLayout>
 

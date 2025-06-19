@@ -5,7 +5,7 @@
              Title="NavegarMenus">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="25">
-            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="40">
+            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="30">
                 <Label Text="Bem-vindo(a)"
                            FontSize="26"
                            FontAttributes="Bold"

@@ -11,6 +11,7 @@ public partial class Chamados : ContentPage
 {
     private readonly HttpClient _httpClient = new HttpClient();
     private readonly string _usuarioLogado;
+    private ObservableCollection<Chamado> _todosChamados = new ObservableCollection<Chamado>();
 
     public Chamados(string usuarioLogado)
 	{
@@ -23,7 +24,7 @@ public partial class Chamados : ContentPage
 
     private async Task CarregarChamadosAsync()
     {
-
+        _todosChamados.Clear();
         try
         {
             string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}.json";
@@ -38,21 +39,27 @@ public partial class Chamados : ContentPage
                 var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
                 chamado.Id = item.Name;
 
-                // Conversão e formatação das datas (se houver valor)
                 if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
-                {
                     chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
-                }
 
                 if (DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao))
-                {
                     chamado.DataAtual = dataCriacao.ToString("dd/MM/yyyy");
-                }
 
-                chamados.Add(chamado);
+                _todosChamados.Add(chamado);
             }
 
-            ChamadosCollectionView.ItemsSource = chamados;
+            ChamadosCollectionView.ItemsSource = _todosChamados;
+
+            // Força o filtro conforme a seleção atual
+            if (StatusPicker.SelectedItem != null)
+            {
+                StatusPicker_SelectedIndexChanged(StatusPicker, EventArgs.Empty);
+            }
+            else
+            {
+                // Caso ainda não tenha carregado o Picker (alternativa segura)
+                StatusPicker.SelectedIndex = 1;
+            }
         }
         catch (Exception ex)
         {
@@ -64,4 +71,20 @@ public partial class Chamados : ContentPage
     {
         App.Current.MainPage = new NavegarMenus();
     }
+    private void StatusPicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        string statusSelecionado = StatusPicker.SelectedItem?.ToString();
+
+        if (string.IsNullOrEmpty(statusSelecionado) || statusSelecionado == "Todos")
+        {
+            ChamadosCollectionView.ItemsSource = _todosChamados;
+        }
+        else
+        {
+            var filtrados = _todosChamados
+                .Where(c => c.Status?.Equals(statusSelecionado, StringComparison.OrdinalIgnoreCase) == true);
+            ChamadosCollectionView.ItemsSource = new ObservableCollection<Chamado>(filtrados);
+        }
+    }
+
 }
