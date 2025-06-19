@@ -15,10 +15,18 @@ public partial class NavegarMenus : ContentPage
 
     private async void CarregarUsuarioAsync()
     {
-        //_usuarioLogado = await SecureStorage.Default.GetAsync("usuario_logado");
-
-        // Agora sim: após o valor ser carregado, atualiza a mensagem
+        // Atualiza a saudação
         AtualizarMensagem();
+
+        // Mostra o botão apenas para Luiz ou Rodrigo
+        if (_usuarioLogado == "Luiz" || _usuarioLogado == "Rodrigo")
+        {
+            ChamadosAdmFrame.IsVisible = true;
+        }
+        else
+        {
+            ChamadosAdmFrame.IsVisible = false;
+        }
     }
 
     private void AtualizarMensagem()

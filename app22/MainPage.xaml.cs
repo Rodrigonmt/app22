@@ -26,14 +26,7 @@ namespace app22
             InitializeComponent();
             _usuarioLog = _usuarioLogado;
             atualizarBoasVindas();
-            //CorrerLetras();
-
-
-            //Task.Run(async () =>
-            //{
-            //    _usuarioLogado = await SecureStorage.Default.GetAsync("usuario_logado");
-            //    lbl_boasvindas.Text = $"Bem vindo(a) " + _usuarioLogado;
-            //});
+            
         }
         
         private void atualizarBoasVindas()

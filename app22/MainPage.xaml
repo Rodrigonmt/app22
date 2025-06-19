@@ -18,23 +18,28 @@
                             FontSize="20"
                             TextColor="Black"/>
                     </Border>
-                    <Frame
-                        WidthRequest="120"
-                        HeightRequest="120"
-                        CornerRadius="60"
-                        Padding="0"
-                        HasShadow="False"
-                        BorderColor="Gray"
-                        HorizontalOptions="Center">
-                        <ImageButton
-                            x:Name="BtnFoto"
-                            Source="foto.png"
-                            BackgroundColor="Transparent"
-                            Aspect="AspectFill"/>
+                        <Frame
+                            WidthRequest="120"
+                            HeightRequest="120"
+                            CornerRadius="60"
+                            Padding="0"
+                            HasShadow="False"
+                            BorderColor="Gray"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            IsClippedToBounds="True">
 
+                        <ImageButton
+                            x:Name="FotoUsuario"
+                            Source="user01.png"
+                            BackgroundColor="Transparent"
+                            Aspect="AspectFill"
+                            WidthRequest="120"
+                            HeightRequest="120"
+                            CornerRadius="60"/>
                     </Frame>
-                </VerticalStackLayout>
-            </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
             <Border>
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10" />
