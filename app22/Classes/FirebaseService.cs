@@ -20,6 +20,35 @@ namespace app22.Classes
             _httpClient = new HttpClient();
         }
 
+        public async Task AtualizarPessoaAsync(string usuarioAntigo, DadosUsuario pessoaAtualizada)
+        {
+            var response = await _httpClient.GetAsync($"{FirebaseUrl}/pessoas.json");
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Erro ao buscar usuários: " + response.StatusCode);
+
+            string json = await response.Content.ReadAsStringAsync();
+            var pessoasDict = JsonSerializer.Deserialize<Dictionary<string, DadosUsuario>>(json);
+
+            if (pessoasDict == null) throw new Exception("Nenhum usuário encontrado.");
+
+            // Procurar o ID da pessoa com o nome antigo
+            var pessoaEntry = pessoasDict.FirstOrDefault(p =>
+                p.Value.usuario?.Trim().ToLower() == usuarioAntigo.Trim().ToLower());
+
+            if (pessoaEntry.Key == null)
+                throw new Exception("Usuário não encontrado para atualização.");
+
+            // Atualizar os dados
+            var updatedJson = JsonSerializer.Serialize(pessoaAtualizada);
+            var content = new StringContent(updatedJson, Encoding.UTF8, "application/json");
+
+            var putResponse = await _httpClient.PutAsync($"{FirebaseUrl}/pessoas/{pessoaEntry.Key}.json", content);
+
+            if (!putResponse.IsSuccessStatusCode)
+                throw new Exception("Erro ao atualizar o usuário no Firebase: " + putResponse.StatusCode);
+        }
+
         public async Task GravarPessoaAsync(DadosUsuario pessoa)
         {
             // Gera ID aleatório no Firebase

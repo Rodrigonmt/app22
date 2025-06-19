@@ -10,7 +10,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="25"/>
                 </Border.StrokeShape>
-                <Entry x:Name="nomeEntry" FontSize="20" Placeholder="Digite seu nome" PlaceholderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Entry x:Name="nomeEntry" IsEnabled="False" FontSize="20" Placeholder="Digite seu nome" PlaceholderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"/>
             </Border>
             <Border StrokeThickness="2" WidthRequest="290" HeightRequest="60" Opacity="0.8" BackgroundColor="lightgray">
                 <Border.StrokeShape>

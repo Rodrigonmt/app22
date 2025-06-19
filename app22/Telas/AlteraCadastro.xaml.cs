@@ -9,17 +9,49 @@ public partial class AlteraCadastro : ContentPage
     {
         InitializeComponent();
         _usuarioLogado = usuarioLogado;
-        verificacamo();
+        CarregaPreencheUsuario();
+        //verificacamo();
     }
 
-    public async void verificacamo()
+    public async void CarregaPreencheUsuario()
     {
-        await DisplayAlert("Mensag", $"->{_usuarioLogado}<-", "Ok");
+        if (string.IsNullOrWhiteSpace(_usuarioLogado))
+        {
+            await DisplayAlert("Erro", "Usuário logado não informado.", "OK");
+            return;
+        }
+
+        try
+        {
+            var firebase = new FirebaseService();
+            var usuario = await firebase.BuscarPessoaPorNomeAsync(_usuarioLogado);
+
+            if (usuario == null)
+            {
+                await DisplayAlert("Aviso", "Usuário não encontrado no banco de dados.", "OK");
+                return;
+            }
+
+            // Preenche os campos com os dados do Firebase
+            nomeEntry.Text = usuario.usuario;
+            telefoneEntry.Text = usuario.telefone;
+            enderecoEntry.Text = usuario.endereco;
+            senhaEntry.Text = usuario.senha;
+            senhaConf.Text = usuario.senha;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Falha ao carregar os dados do usuário: {ex.Message}", "OK");
+        }
     }
+
+    //public async void verificacamo()
+    //{
+    //    await DisplayAlert("Mensag", $"->{_usuarioLogado}<-", "Ok");
+    //}
 
     private async void BTNCadastro_Clicked(object sender, EventArgs e)
     {
-        // Verifica se algum campo está vazio
         if (string.IsNullOrWhiteSpace(nomeEntry.Text) ||
         string.IsNullOrWhiteSpace(telefoneEntry.Text) ||
         string.IsNullOrWhiteSpace(enderecoEntry.Text) ||
@@ -32,38 +64,28 @@ public partial class AlteraCadastro : ContentPage
 
         if (senhaEntry.Text != senhaConf.Text)
         {
-            await DisplayAlert("Erro", "As senhas digitadas não coincidem. Verifique e tente novamente.", "OK");
+            await DisplayAlert("Erro", "As senhas digitadas não coincidem.", "OK");
             return;
         }
 
-        var firebase = new FirebaseService();
-
-        // ?? Verifica se o usuário já está cadastrado
-        var usuarioExistente = await firebase.BuscarPessoaPorNomeAsync(nomeEntry.Text);
-        if (usuarioExistente != null)
-        {
-            await DisplayAlert("Erro", "Usuário já cadastrado. Por favor, utilize outro nome de usuário.", "OK");
-            return;
-        }
-
-        var pessoa = new DadosUsuario
+        var pessoaAtualizada = new DadosUsuario
         {
             usuario = nomeEntry.Text,
             telefone = telefoneEntry.Text,
             endereco = enderecoEntry.Text,
-            senha = senhaEntry.Text,
+            senha = senhaEntry.Text
         };
 
         try
         {
-            await firebase.GravarPessoaAsync(pessoa);
-            await DisplayAlert("Sucesso", "Usuário cadastrado com sucesso!", "OK");
-            //await SecureStorage.Default.SetAsync("usuario_logado", nomeEntry.Text);
+            var firebase = new FirebaseService();
+            await firebase.AtualizarPessoaAsync(_usuarioLogado, pessoaAtualizada);
+            await DisplayAlert("Sucesso", "Cadastro atualizado com sucesso!", "OK");
             App.Current.MainPage = new NavegarMenus(nomeEntry.Text);
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Erro", ex.Message, "OK");
+            await DisplayAlert("Erro", $"Falha ao atualizar o cadastro: {ex.Message}", "OK");
         }
 
 
