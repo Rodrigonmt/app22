@@ -72,6 +72,15 @@
                         Clicked="OnAlterarCadastroClicked"/>
             </Frame>
 
+            <!-- Botão: Chamados Adm -->
+            <Frame CornerRadius="20" Padding="10" BackgroundColor="White" HasShadow="True">
+                <Button Text="✏️  Chamados Adm"
+            FontSize="20"
+            BackgroundColor="Transparent"
+            TextColor="#34495e"
+            Clicked="OnChamadosAdm"/>
+            </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -8,18 +8,61 @@ using System.Text;
 
 namespace app22.Telas;
 
-public partial class Chamados : ContentPage
+public partial class ChamadosAdm : ContentPage
 {
     private readonly HttpClient _httpClient = new HttpClient();
-    private readonly string _usuarioLogado;
+    private string _usuarioLogado = "Amanda";
     private ObservableCollection<Chamado> _todosChamados = new ObservableCollection<Chamado>();
-
-    public Chamados(string usuarioLogado)
+    private List<string> _usuariosDisponiveis = new List<string>();
+    public ChamadosAdm()
 	{
+		InitializeComponent();
+        _ = CarregarUsuariosAsync(); // adiciona essa linha
+        _ = CarregarChamadosAsync();
+    }
 
-        InitializeComponent();
-        _usuarioLogado = usuarioLogado;
-        CarregarChamadosAsync();
+    private void AplicarFiltros_Clicked(object sender, EventArgs e)
+    {
+        string statusSelecionado = StatusPicker.SelectedItem?.ToString();
+        string equipamentoSelecionado = EquipamentoPicker.SelectedItem?.ToString();
+
+        /*
+         string statusSelecionado = StatusPicker.SelectedItem?.ToString();
+        string equipamentoFiltro = EquipamentoEntry.Text?.ToLower()?.Trim();
+         */
+
+        DateTime? dataAgendadaIni = DataAgendadaInicio.Date;
+        DateTime? dataAgendadaFim = DataAgendadaFim.Date;
+        DateTime? dataCriacaoIni = DataCriacaoInicio.Date;
+        DateTime? dataCriacaoFim = DataCriacaoFim.Date;
+
+        var filtrados = _todosChamados.Where(c =>
+        {
+            bool statusOK = statusSelecionado == "Todos" || c.Status?.Equals(statusSelecionado, StringComparison.OrdinalIgnoreCase) == true;
+            bool equipamentoOK = equipamentoSelecionado == "Todos" ||
+                     c.Equipamento?.Equals(equipamentoSelecionado, StringComparison.OrdinalIgnoreCase) == true;
+
+
+            bool agendadaOK = DateTime.TryParse(c.DataSelecionada, out DateTime dataAgendada)
+                              && dataAgendada >= dataAgendadaIni && dataAgendada <= dataAgendadaFim;
+
+            bool criacaoOK = DateTime.TryParse(c.DataAtual, out DateTime dataCriacao)
+                             && dataCriacao >= dataCriacaoIni && dataCriacao <= dataCriacaoFim;
+
+            return statusOK && equipamentoOK && agendadaOK && criacaoOK;
+        });
+
+        ChamadosCollectionView.ItemsSource = new ObservableCollection<Chamado>(filtrados);
+    }
+
+    private void Filtro_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        AplicarFiltros_Clicked(null, null);
+    }
+
+    private void FiltroEquipamento_Changed(object sender, EventArgs e)
+    {
+        AplicarFiltros_Clicked(null, null);
     }
 
     private async void CancelarChamado_Clicked(object sender, EventArgs e)
@@ -67,7 +110,7 @@ public partial class Chamados : ContentPage
         try
         {
             string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}.json";
-            
+
             var response = await _httpClient.GetStringAsync(url);
 
             if (string.IsNullOrWhiteSpace(response) || response == "null")
@@ -131,5 +174,34 @@ public partial class Chamados : ContentPage
             ChamadosCollectionView.ItemsSource = new ObservableCollection<Chamado>(filtrados);
         }
     }
+    private async Task CarregarUsuariosAsync()
+    {
+        try
+        {
+            string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos.json";
+            var response = await _httpClient.GetStringAsync(url);
 
+            if (string.IsNullOrWhiteSpace(response) || response == "null")
+                return;
+
+            var jsonDoc = JsonDocument.Parse(response);
+            _usuariosDisponiveis = jsonDoc.RootElement.EnumerateObject().Select(u => u.Name).ToList();
+
+            UsuarioPicker.ItemsSource = _usuariosDisponiveis;
+            UsuarioPicker.SelectedItem = _usuarioLogado; // Seleciona usuário atual por padrão
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", "Erro ao carregar usuários: " + ex.Message, "OK");
+        }
+    }
+
+    private async void UsuarioPicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (UsuarioPicker.SelectedItem is string usuarioSelecionado)
+        {
+            _usuarioLogado = usuarioSelecionado;
+            await CarregarChamadosAsync();
+        }
+    }
 }
