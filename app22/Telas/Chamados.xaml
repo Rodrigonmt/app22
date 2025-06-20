@@ -9,10 +9,9 @@
             <conv:StatusToEnabledConverter x:Key="StatusToEnabledConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    <Grid RowDefinitions="Auto,*" Padding="10">
 
-        <!-- Cabeçalho (não rola) -->
+    <Grid RowDefinitions="Auto,*" Padding="10">
+        <!-- Cabeçalho -->
         <VerticalStackLayout Grid.Row="0">
             <HorizontalStackLayout Spacing="20">
                 <Frame Padding="0" HasShadow="False" CornerRadius="40" HeightRequest="40" WidthRequest="40"
@@ -34,10 +33,10 @@
                 <HorizontalStackLayout Margin="0,10">
                     <Label Text="Status:" VerticalOptions="Center" FontAttributes="Bold"/>
                     <Picker x:Name="StatusPicker"
-                        Title="Selecionar"
-                        WidthRequest="180"
-                        SelectedIndex="0"
-                        SelectedIndexChanged="StatusPicker_SelectedIndexChanged">
+                            Title="Selecionar"
+                            WidthRequest="180"
+                            SelectedIndex="0"
+                            SelectedIndexChanged="StatusPicker_SelectedIndexChanged">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>Todos</x:String>
@@ -49,11 +48,13 @@
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
-        <!-- Lista (rola) -->
+        <!-- Lista de chamados -->
         <CollectionView x:Name="ChamadosCollectionView"
                         Grid.Row="1"
                         VerticalOptions="FillAndExpand"
-                        Margin="0,10">
+                        Margin="0,10"
+                        SelectionMode="Single"
+                        SelectionChanged="ChamadosCollectionView_SelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
@@ -77,31 +78,26 @@
                                 <Label Text="Hora Agendada:" FontAttributes="Bold" FontSize="14" WidthRequest="120"/>
                                 <Label Text="{Binding HoraSelecionada}" FontSize="14"/>
                             </HorizontalStackLayout>
-                            
+
                             <HorizontalStackLayout>
                                 <Label Text="Data Criação:" FontAttributes="Bold" FontSize="14" WidthRequest="120"/>
                                 <Label Text="{Binding DataAtual}" FontSize="14" TextColor="Gray"/>
                             </HorizontalStackLayout>
+
                             <Button Text="Cancelar"
-        TextColor="White"
-        Clicked="CancelarChamado_Clicked"
-        HorizontalOptions="End"
-        Margin="0,10,0,0"
-        IsEnabled="{Binding Status, Converter={StaticResource StatusToEnabledConverter}}">
+                                    TextColor="White"
+                                    Clicked="CancelarChamado_Clicked"
+                                    HorizontalOptions="End"
+                                    Margin="0,10,0,0"
+                                    IsEnabled="{Binding Status, Converter={StaticResource StatusToEnabledConverter}}">
                                 <Button.Triggers>
-                                    <DataTrigger TargetType="Button"
-                                         Binding="{Binding Status}"
-                                         Value="Pendente">
+                                    <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="Pendente">
                                         <Setter Property="BackgroundColor" Value="Red" />
                                     </DataTrigger>
-                                    <DataTrigger TargetType="Button"
-                                         Binding="{Binding Status}"
-                                         Value="Cancelado">
+                                    <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="Cancelado">
                                         <Setter Property="BackgroundColor" Value="Gray" />
                                     </DataTrigger>
-                                    <DataTrigger TargetType="Button"
-                                         Binding="{Binding Status}"
-                                         Value="Concluído">
+                                    <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="Concluído">
                                         <Setter Property="BackgroundColor" Value="Gray" />
                                     </DataTrigger>
                                 </Button.Triggers>
@@ -111,6 +107,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
     </Grid>
 </ContentPage>

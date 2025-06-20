@@ -22,6 +22,24 @@ public partial class Chamados : ContentPage
         CarregarChamadosAsync();
     }
 
+    private async void VerDetalhesChamado_Clicked(object sender, EventArgs e)
+    {
+        App.Current.MainPage = new ChamadoDetalhes();
+    }
+
+    private async void ChamadosCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            App.Current.MainPage = new ChamadoDetalhes();
+        }
+        catch (Exception ex)
+        {
+
+            DisplayAlert("Erro", ex.Message, "Ok");
+        }
+    }
+
     private async void CancelarChamado_Clicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.BindingContext is Chamado chamado)

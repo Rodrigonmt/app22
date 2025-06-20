@@ -107,6 +107,9 @@
 	  <MauiXaml Update="Telas\Cadastro.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Telas\ChamadoDetalhes.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Telas\Chamados.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
