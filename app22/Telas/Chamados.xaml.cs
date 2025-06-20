@@ -29,15 +29,13 @@ public partial class Chamados : ContentPage
 
     private async void ChamadosCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        try
+        if (e.CurrentSelection.FirstOrDefault() is Chamado chamadoSelecionado)
         {
-            await Shell.Current.GoToAsync(nameof(ChamadoDetalhes));
+            await Shell.Current.GoToAsync($"{nameof(ChamadoDetalhes)}?id={chamadoSelecionado.Id}");
         }
-        catch (Exception ex)
-        {
 
-            DisplayAlert("Erro", ex.Message, "Ok");
-        }
+        // Limpa seleção
+        ((CollectionView)sender).SelectedItem = null;
     }
 
     private async void CancelarChamado_Clicked(object sender, EventArgs e)
