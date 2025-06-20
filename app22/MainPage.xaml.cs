@@ -18,7 +18,7 @@ namespace app22
 {
     public partial class MainPage : ContentPage
     {
-
+        private FileResult _fotoArquivo;
         private Button botaoSelecionado;
         public string? _usuarioLog = null;//variavel aceita valor null com o ?
         public MainPage(string _usuarioLogado)
@@ -28,7 +28,33 @@ namespace app22
             atualizarBoasVindas();
             
         }
-        
+
+        private async void BtnTirarFoto_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MediaPicker.Default.IsCaptureSupported)
+                {
+                    _fotoArquivo = await MediaPicker.Default.CapturePhotoAsync();
+
+                    if (_fotoArquivo != null)
+                    {
+                        var stream = await _fotoArquivo.OpenReadAsync();
+                        ImagemEquipamentoPreview.Source = ImageSource.FromStream(() => stream);
+                        ImagemEquipamentoPreview.IsVisible = true;
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Erro", "Captura de imagem não suportada neste dispositivo.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", $"Falha ao capturar imagem: {ex.Message}", "OK");
+            }
+        }
+
         private void atualizarBoasVindas()
         {
             lbl_boasvindas.Text = $"Bem vindo(a) " + _usuarioLog;
@@ -66,6 +92,16 @@ namespace app22
 
         private async void BTNAgendar_Clicked(object sender, EventArgs e)
         {
+            string base64Image = null;
+
+            if (_fotoArquivo != null)
+            {
+                using var stream = await _fotoArquivo.OpenReadAsync();
+                using var memoryStream = new MemoryStream();
+                await stream.CopyToAsync(memoryStream);
+                base64Image = Convert.ToBase64String(memoryStream.ToArray());
+            }
+
             if (botaoSelecionado==null)
             {
                 DisplayAlert("Erro", "Favor selecionar o equipamento com defeito", "Ok");
@@ -97,7 +133,8 @@ namespace app22
                     HoraSelecionada = horaSelecionada,
                     DataAtual = dataAtual,
                     HoraAtual = horaAtual,
-                    Status = "Pendente"
+                    Status = "Pendente",
+                    FotoEquipamento = base64Image
                 };
 
                 var firebaseService = new FirebaseService();

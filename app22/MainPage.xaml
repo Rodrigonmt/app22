@@ -5,7 +5,17 @@
 
     <Grid>
         <VerticalStackLayout VerticalOptions="Start">
-            <Button ImageSource="voltar.png" BackgroundColor="Transparent" WidthRequest="80" x:Name="Desconnectar" Clicked="ImageButton_Clicked"/>
+            <HorizontalStackLayout Spacing="80" HorizontalOptions="Center">
+                <Button ImageSource="voltar.png" BackgroundColor="Transparent" WidthRequest="60" x:Name="Desconnectar" Clicked="ImageButton_Clicked"/>
+                <Button Text="Tirar Foto do Equipamento"
+                    Clicked="BtnTirarFoto_Clicked"
+                    Margin="0,10,0,0" />
+                <Image x:Name="ImagemEquipamentoPreview"
+                   HeightRequest="150"
+                   Aspect="AspectFill"
+                   IsVisible="False" />
+            </HorizontalStackLayout>
+            
             <Frame BorderColor="Transparent" BackgroundColor="Transparent">
                 <VerticalStackLayout Padding="0,0,0,0" Margin="0,0,0,0">
                     <Border StrokeThickness="2" WidthRequest="350" HeightRequest="40" Opacity="0.8" BackgroundColor="lightgray">

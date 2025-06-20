@@ -14,6 +14,7 @@ namespace app22.Classes
         public string DataAtual { get; set; }
         public string HoraAtual { get; set; }
         public string Status { get; set; }
+        public string FotoEquipamento { get; set; }
     }
 
 }
