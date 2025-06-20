@@ -12,7 +12,8 @@ namespace app22
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new NavigationPage(new Login()));
+            return new Window(new AppShell());
+
         }
     }
 }

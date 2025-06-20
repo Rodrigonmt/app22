@@ -81,7 +81,7 @@ public partial class AlteraCadastro : ContentPage
             var firebase = new FirebaseService();
             await firebase.AtualizarPessoaAsync(_usuarioLogado, pessoaAtualizada);
             await DisplayAlert("Sucesso", "Cadastro atualizado com sucesso!", "OK");
-            App.Current.MainPage = new NavegarMenus(nomeEntry.Text);
+            App.Current.MainPage = new NavegarMenus();
         }
         catch (Exception ex)
         {
@@ -95,7 +95,7 @@ public partial class AlteraCadastro : ContentPage
     {
         if (_usuarioLogado != null)
         {
-            App.Current.MainPage = new NavegarMenus(_usuarioLogado);
+            App.Current.MainPage = new NavegarMenus();
         }
         else
         {

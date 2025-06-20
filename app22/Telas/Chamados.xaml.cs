@@ -8,37 +8,37 @@ using System.Text;
 
 namespace app22.Telas;
 
+[QueryProperty(nameof(UsuarioLogado), "usuarioLogado")]
 public partial class Chamados : ContentPage
 {
     private readonly HttpClient _httpClient = new HttpClient();
-    private readonly string _usuarioLogado;
     private ObservableCollection<Chamado> _todosChamados = new ObservableCollection<Chamado>();
+    public string UsuarioLogado { get; set; }
 
-    public Chamados(string usuarioLogado)
+    public Chamados()
 	{
 
         InitializeComponent();
-        _usuarioLogado = usuarioLogado;
         CarregarChamadosAsync();
     }
 
-    private async void VerDetalhesChamado_Clicked(object sender, EventArgs e)
-    {
-        App.Current.MainPage = new ChamadoDetalhes();
-    }
+    //private async void VerDetalhesChamado_Clicked(object sender, EventArgs e)
+    //{
+    //    await Shell.Current.GoToAsync($"{nameof(ChamadoDetalhes)}?usuarioLogado={UsuarioLogado}");
+    //}
 
-    private async void ChamadosCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        try
-        {
-            App.Current.MainPage = new ChamadoDetalhes();
-        }
-        catch (Exception ex)
-        {
+    //private async void ChamadosCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    //{
+    //    try
+    //    {
+    //        await Shell.Current.GoToAsync($"{nameof(ChamadoDetalhes)}?usuarioLogado={UsuarioLogado}");
+    //    }
+    //    catch (Exception ex)
+    //    {
 
-            DisplayAlert("Erro", ex.Message, "Ok");
-        }
-    }
+    //        DisplayAlert("Erro", ex.Message, "Ok");
+    //    }
+    //}
 
     private async void CancelarChamado_Clicked(object sender, EventArgs e)
     {
@@ -51,7 +51,7 @@ public partial class Chamados : ContentPage
 
             try
             {
-                string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}/{chamado.Id}/Status.json";
+                string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{UsuarioLogado}/{chamado.Id}/Status.json";
                 var content = new StringContent("\"Cancelado\"", Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PutAsync(url, content);
@@ -84,7 +84,7 @@ public partial class Chamados : ContentPage
         _todosChamados.Clear();
         try
         {
-            string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}.json";
+            string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{UsuarioLogado}.json";
             
             var response = await _httpClient.GetStringAsync(url);
 
@@ -132,7 +132,7 @@ public partial class Chamados : ContentPage
 
     private async void BTNVoltar_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new NavegarMenus(_usuarioLogado);
+        await Shell.Current.GoToAsync($"{nameof(NavegarMenus)}?usuarioLogado={UsuarioLogado}");
     }
     private void StatusPicker_SelectedIndexChanged(object sender, EventArgs e)
     {

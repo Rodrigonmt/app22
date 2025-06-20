@@ -58,7 +58,7 @@ public partial class Cadastro : ContentPage
             await firebase.GravarPessoaAsync(pessoa);
             await DisplayAlert("Sucesso", "Usuário cadastrado com sucesso!", "OK");
             //await SecureStorage.Default.SetAsync("usuario_logado", nomeEntry.Text);
-            App.Current.MainPage = new NavegarMenus(nomeEntry.Text);
+            await Shell.Current.GoToAsync($"{nameof(NavegarMenus)}?usuarioLogado={nomeEntry.Text}");
         }
         catch (Exception ex)
         {
@@ -68,8 +68,8 @@ public partial class Cadastro : ContentPage
 
     }
 
-    private void BTNVoltar_Clicked(object sender, EventArgs e)
+    private async void BTNVoltar_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new Login();
+        await Shell.Current.GoToAsync(nameof(Login));
     }
 }

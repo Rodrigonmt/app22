@@ -44,9 +44,9 @@ public partial class Login : ContentPage
 
         if (pessoa.senha == senhaDigitado)
         {
-            //await SecureStorage.Default.SetAsync("usuario_logado", TXTUsuario.Text);
-            App.Current.MainPage = new NavegarMenus(TXTUsuario.Text);
-        }
+                //await SecureStorage.Default.SetAsync("usuario_logado", TXTUsuario.Text);
+                await Shell.Current.GoToAsync($"{nameof(NavegarMenus)}?usuarioLogado={TXTUsuario.Text}");
+            }
         else
         {
             await DisplayAlert("Mensagem", "Senha não está correta!", "OK");

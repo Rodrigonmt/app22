@@ -21,6 +21,7 @@ namespace app22
         private FileResult _fotoArquivo;
         private Button botaoSelecionado;
         public string? _usuarioLog = null;//variavel aceita valor null com o ?
+
         public MainPage(string _usuarioLogado)
         {
             InitializeComponent();
@@ -63,7 +64,7 @@ namespace app22
         private void ImageButton_Clicked(object sender, EventArgs e)
         {
             // Ação ao clicar (por exemplo, voltar)
-            App.Current.MainPage = new NavegarMenus(_usuarioLog);
+            App.Current.MainPage = new NavegarMenus();
         }
 
         private void MarcarBotao_Clicked(object sender, EventArgs e)
@@ -141,7 +142,7 @@ namespace app22
                 await firebaseService.SalvarAgendamentoAsync(userId, agendamento);
 
                 await DisplayAlert("Sucesso", "Agendamento salvo com sucesso!", "OK");
-                App.Current.MainPage = new Chamados(_usuarioLog);
+                App.Current.MainPage = new Chamados();
             }
             catch (Exception ex)
             {

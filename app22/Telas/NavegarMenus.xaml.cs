@@ -1,47 +1,38 @@
 namespace app22.Telas;
 
+[QueryProperty(nameof(UsuarioLogado), "usuarioLogado")]
 public partial class NavegarMenus : ContentPage
 {
-    public string _usuarioLogado = null;//variavel aceita valor null com o ?
-    public NavegarMenus(string usuariologado)
+    public string UsuarioLogado { get; set; }//variavel aceita valor null com o ?
+    public NavegarMenus()
 	{
         
         InitializeComponent();
-        _usuarioLogado = usuariologado;
-        CarregarUsuarioAsync();
-
-
     }
 
-    private async void CarregarUsuarioAsync()
+    protected override void OnAppearing()
     {
-        // Atualiza a saudação
+        base.OnAppearing();
         AtualizarMensagem();
 
-        // Mostra o botão apenas para Luiz ou Rodrigo
-        if (_usuarioLogado == "Luiz" || _usuarioLogado == "Rodrigo")
-        {
-            ChamadosAdmFrame.IsVisible = true;
-        }
-        else
-        {
-            ChamadosAdmFrame.IsVisible = false;
-        }
+        ChamadosAdmFrame.IsVisible = UsuarioLogado == "Luiz" || UsuarioLogado == "Rodrigo";
     }
+
+   
 
     private void AtualizarMensagem()
     {
-        BemVindoLabel.Text = $"Bem-vindo(a), {_usuarioLogado}!";
+        BemVindoLabel.Text = $"Bem-vindo(a), {UsuarioLogado}!";
     }
 
     private async void OnCriarChamadoClicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new MainPage(_usuarioLogado);
+        await Shell.Current.GoToAsync($"{nameof(MainPage)}?usuarioLogado={UsuarioLogado}");
     }
 
     private async void OnHistoricoClicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new Chamados(_usuarioLogado);
+        await Shell.Current.GoToAsync($"{nameof(Chamados)}?usuarioLogado={UsuarioLogado}");
     }
 
     private async void OnVenderClicked(object sender, EventArgs e)
@@ -56,7 +47,7 @@ public partial class NavegarMenus : ContentPage
 
     private async void OnAlterarCadastroClicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new AlteraCadastro(_usuarioLogado);
+        await Shell.Current.GoToAsync($"{nameof(AlteraCadastro)}?usuarioLogado={UsuarioLogado}");
     }
 
     private async void Desconnectar_Clicked(object sender, EventArgs e)
@@ -65,13 +56,13 @@ public partial class NavegarMenus : ContentPage
         if (conf)
         {
             SecureStorage.Default.Remove("usuario_logado");
-            App.Current.MainPage = new Login();
+            await Shell.Current.GoToAsync("//Login"); // volta para o início
         }
     }
 
 
-    private void OnChamadosAdm(object sender, EventArgs e)
+    private async void OnChamadosAdm(object sender, EventArgs e)
     {
-        App.Current.MainPage = new ChamadosAdm(_usuarioLogado);
+        await Shell.Current.GoToAsync($"{nameof(ChamadosAdm)}?usuarioLogado={UsuarioLogado}");
     }
 }

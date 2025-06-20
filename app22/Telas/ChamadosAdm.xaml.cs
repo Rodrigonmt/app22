@@ -7,15 +7,14 @@ using System;
 using System.Text;
 
 namespace app22.Telas;
-
+[QueryProperty(nameof(UsuarioLogado), "usuarioLogado")]
 public partial class ChamadosAdm : ContentPage
 {
     private readonly HttpClient _httpClient = new HttpClient();
-    private string _userlog;
-    private string _usuarioretornar;
     private ObservableCollection<Chamado> _todosChamados = new ObservableCollection<Chamado>();
     private List<string> _usuariosDisponiveis = new List<string>();
-    public ChamadosAdm(string usuarlogretorn)
+    public string UsuarioLogado { get; set; }
+    public ChamadosAdm()
 	{
         InitializeComponent();
 
@@ -29,7 +28,6 @@ public partial class ChamadosAdm : ContentPage
 
         // ? Primeiro carrega os usuários e então os chamados
         _ = InicializarDadosAsync();
-        _usuarioretornar = usuarlogretorn;
     }
 
     private async Task InicializarDadosAsync()
@@ -92,7 +90,7 @@ public partial class ChamadosAdm : ContentPage
 
             try
             {
-                string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_userlog}/{chamado.Id}/Status.json";
+                string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{UsuarioLogado}/{chamado.Id}/Status.json";
                 var content = new StringContent("\"Cancelado\"", Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PutAsync(url, content);
@@ -134,8 +132,8 @@ public partial class ChamadosAdm : ContentPage
             }
             else
             {
-                _userlog = UsuarioPicker.SelectedItem?.ToString(); // atualiza localmente
-                url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_userlog}.json";
+                UsuarioLogado = UsuarioPicker.SelectedItem?.ToString(); // atualiza localmente
+                url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{UsuarioLogado}.json";
             }
 
             var response = await _httpClient.GetStringAsync(url);
@@ -197,7 +195,7 @@ public partial class ChamadosAdm : ContentPage
 
     private async void BTNVoltar_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new NavegarMenus(_usuarioretornar);
+        await Shell.Current.GoToAsync($"{nameof(NavegarMenus)}?usuarioLogado={UsuarioLogado}");
     }
     private void StatusPicker_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -231,7 +229,7 @@ public partial class ChamadosAdm : ContentPage
 
             UsuarioPicker.ItemsSource = _usuariosDisponiveis;
             UsuarioPicker.SelectedItem = "Todos"; // ? seleciona "Todos" como padrão
-            _userlog = null; // ? define para buscar todos os usuários
+            UsuarioLogado = null; // ? define para buscar todos os usuários
 
             await CarregarChamadosAsync(); // recarrega com todos os chamados
         }
@@ -245,7 +243,7 @@ public partial class ChamadosAdm : ContentPage
     {
         if (UsuarioPicker.SelectedItem is string usuarioSelecionado)
         {
-            _userlog = usuarioSelecionado;
+            UsuarioLogado = usuarioSelecionado;
             await CarregarChamadosAsync();
         }
     }
