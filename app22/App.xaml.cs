@@ -7,7 +7,7 @@ namespace app22
         public App()
         {
             InitializeComponent();
-            
+
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

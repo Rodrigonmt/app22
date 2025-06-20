@@ -31,7 +31,7 @@ public partial class Chamados : ContentPage
     {
         try
         {
-            App.Current.MainPage = new ChamadoDetalhes();
+            await Shell.Current.GoToAsync(nameof(ChamadoDetalhes));
         }
         catch (Exception ex)
         {
