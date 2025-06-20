@@ -72,6 +72,6 @@ public partial class NavegarMenus : ContentPage
 
     private void OnChamadosAdm(object sender, EventArgs e)
     {
-        App.Current.MainPage = new ChamadosAdm();
+        App.Current.MainPage = new ChamadosAdm(_usuarioLogado);
     }
 }

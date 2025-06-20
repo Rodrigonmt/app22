@@ -11,13 +11,15 @@ namespace app22.Telas;
 public partial class ChamadosAdm : ContentPage
 {
     private readonly HttpClient _httpClient = new HttpClient();
-    private string _usuarioLogado = "Amanda";
+    private string _userlog;
+    private string _usuarioretornar;
     private ObservableCollection<Chamado> _todosChamados = new ObservableCollection<Chamado>();
     private List<string> _usuariosDisponiveis = new List<string>();
-    public ChamadosAdm()
+    public ChamadosAdm(string usuarlogretorn)
 	{
-		InitializeComponent();
-        StatusPicker.SelectedIndex = 0; // Seleciona "Todos"
+        InitializeComponent();
+
+        StatusPicker.SelectedIndex = 0;
         EquipamentoPicker.SelectedIndex = 0;
 
         // Define intervalo de 30 dias antes e depois da data atual
@@ -25,10 +27,16 @@ public partial class ChamadosAdm : ContentPage
         DataAgendadaFim.Date = DateTime.Today.AddDays(30);
         DataCriacaoInicio.Date = DateTime.Today.AddDays(-30);
 
-        _ = CarregarUsuariosAsync();
-        _ = CarregarChamadosAsync();
+        // ? Primeiro carrega os usuários e então os chamados
+        _ = InicializarDadosAsync();
+        _usuarioretornar = usuarlogretorn;
     }
 
+    private async Task InicializarDadosAsync()
+    {
+        await CarregarUsuariosAsync(); // Isso define "Todos" como padrão
+        await CarregarChamadosAsync(); // Agora esse método vai buscar todos os chamados
+    }
     private void AplicarFiltros_Clicked(object sender, EventArgs e)
     {
         string statusSelecionado = StatusPicker.SelectedItem?.ToString();
@@ -84,7 +92,7 @@ public partial class ChamadosAdm : ContentPage
 
             try
             {
-                string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}/{chamado.Id}/Status.json";
+                string url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_userlog}/{chamado.Id}/Status.json";
                 var content = new StringContent("\"Cancelado\"", Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PutAsync(url, content);
@@ -126,8 +134,8 @@ public partial class ChamadosAdm : ContentPage
             }
             else
             {
-                _usuarioLogado = UsuarioPicker.SelectedItem?.ToString(); // atualiza localmente
-                url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_usuarioLogado}.json";
+                _userlog = UsuarioPicker.SelectedItem?.ToString(); // atualiza localmente
+                url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_userlog}.json";
             }
 
             var response = await _httpClient.GetStringAsync(url);
@@ -189,7 +197,7 @@ public partial class ChamadosAdm : ContentPage
 
     private async void BTNVoltar_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new NavegarMenus(_usuarioLogado);
+        App.Current.MainPage = new NavegarMenus(_usuarioretornar);
     }
     private void StatusPicker_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -223,7 +231,7 @@ public partial class ChamadosAdm : ContentPage
 
             UsuarioPicker.ItemsSource = _usuariosDisponiveis;
             UsuarioPicker.SelectedItem = "Todos"; // ? seleciona "Todos" como padrão
-            _usuarioLogado = null; // ? define para buscar todos os usuários
+            _userlog = null; // ? define para buscar todos os usuários
 
             await CarregarChamadosAsync(); // recarrega com todos os chamados
         }
@@ -237,7 +245,7 @@ public partial class ChamadosAdm : ContentPage
     {
         if (UsuarioPicker.SelectedItem is string usuarioSelecionado)
         {
-            _usuarioLogado = usuarioSelecionado;
+            _userlog = usuarioSelecionado;
             await CarregarChamadosAsync();
         }
     }
