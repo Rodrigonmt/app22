@@ -15,5 +15,6 @@ namespace app22.Classes
         public string HoraAtual { get; set; }
         public string HoraSelecionada { get; set; }
         public string Status {  get; set; }
+        public string Usuario { get; set; }
     }
 }

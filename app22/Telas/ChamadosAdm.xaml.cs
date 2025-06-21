@@ -124,18 +124,24 @@ public partial class ChamadosAdm : ContentPage
             {
                 foreach (var usuario in jsonDoc.RootElement.EnumerateObject())
                 {
-                    foreach (var item in usuario.Value.EnumerateObject())
+                    foreach (var usuarioname in jsonDoc.RootElement.EnumerateObject())
                     {
-                        var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
-                        chamado.Id = item.Name;
+                        string nomeUsuario = usuarioname.Name; // <-- Aqui capturamos o nome do usuário
 
-                        if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
-                            chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
+                        foreach (var item in usuarioname.Value.EnumerateObject())
+                        {
+                            var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
+                            chamado.Id = item.Name;
+                            chamado.Usuario = nomeUsuario; // <-- Aqui atribuímos ao objeto Chamado
 
-                        if (DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao))
-                            chamado.DataAtual = dataCriacao.ToString("dd/MM/yyyy");
+                            if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
+                                chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
 
-                        _todosChamados.Add(chamado);
+                            if (DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao))
+                                chamado.DataAtual = dataCriacao.ToString("dd/MM/yyyy");
+
+                            _todosChamados.Add(chamado);
+                        }
                     }
                 }
             }
@@ -145,6 +151,7 @@ public partial class ChamadosAdm : ContentPage
                 {
                     var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
                     chamado.Id = item.Name;
+                    chamado.Usuario = _userlog; // <-- Aqui também!
 
                     if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
                         chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
