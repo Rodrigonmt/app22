@@ -7,24 +7,24 @@ public partial class Login : ContentPage
 	public Login()
 	{
 		InitializeComponent();
-        StartMarquee();
+        //StartMarquee();
 
     }
 
-    private async void StartMarquee()
-    {
-        while (true)
-        {
-            double larguraTexto = teste1.Width;
-            double larguraTela = this.Width;
+    //private async void StartMarquee()
+    //{
+    //    while (true)
+    //    {
+    //        double larguraTexto = teste1.Width;
+    //        double larguraTela = this.Width;
 
-            // Começa fora da tela à direita
-            teste1.TranslationX = larguraTela;
+    //        // Começa fora da tela à direita
+    //        teste1.TranslationX = larguraTela;
 
-            // Move para a esquerda até fora da tela
-            await teste1.TranslateTo(-larguraTexto, 0, 8000, Easing.Linear);
-        }
-    }
+    //        // Move para a esquerda até fora da tela
+    //        await teste1.TranslateTo(-larguraTexto, 0, 8000, Easing.Linear);
+    //    }
+    //}
 
     private async void BTN_Entrar_Login_Clicked(object sender, EventArgs e)
     {
@@ -44,9 +44,10 @@ public partial class Login : ContentPage
 
         if (pessoa.senha == senhaDigitado)
         {
-            //await SecureStorage.Default.SetAsync("usuario_logado", TXTUsuario.Text);
-            App.Current.MainPage = new NavegarMenus(TXTUsuario.Text);
-        }
+                //await SecureStorage.Default.SetAsync("usuario_logado", TXTUsuario.Text);
+                //App.Current.MainPage = new NavigationPage(new NavegarMenus(TXTUsuario.Text));
+                await Navigation.PushAsync(new NavegarMenus(TXTUsuario.Text));
+            }
         else
         {
             await DisplayAlert("Mensagem", "Senha não está correta!", "OK");
@@ -63,7 +64,7 @@ public partial class Login : ContentPage
     {
         try
         {
-            App.Current.MainPage = new Cadastro();
+            await Navigation.PushAsync(new Cadastro());
 
         }
         catch (Exception ex)

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="app22.Telas.AlteraCadastro"
-             Title="AlteraCadastro">
+             x:Class="app22.Telas.AlteraCadastro">
     <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
         <Image Source="fundo4.jpg" HorizontalOptions="Fill" VerticalOptions="Fill" Opacity="0.5"/>
         <VerticalStackLayout VerticalOptions="Center" Spacing="10">
@@ -37,8 +36,6 @@
                 <Entry x:Name="senhaConf" Placeholder="Confirme sua senha" FontSize="20" HorizontalOptions="Center" PlaceholderColor="Black" VerticalOptions="Center"/>
             </Border>
             <Button Text="CADASTRAR" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" WidthRequest="180" Opacity="0.8" x:Name="BTNCadastro" Clicked="BTNCadastro_Clicked"/>
-            <Button Text="VOLTAR" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" WidthRequest="100" Opacity="0.8" x:Name="BTNVoltar" Clicked="BTNVoltar_Clicked"/>
-
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

@@ -14,17 +14,6 @@
         <!-- Cabeçalho -->
         <VerticalStackLayout Grid.Row="0">
             <HorizontalStackLayout Spacing="20">
-                <Frame Padding="0" HasShadow="False" CornerRadius="40" HeightRequest="40" WidthRequest="40"
-                       IsClippedToBounds="True" BackgroundColor="Transparent" HorizontalOptions="Start">
-                    <ImageButton Source="voltar.png"
-                                 BackgroundColor="Transparent"
-                                 Clicked="BTNVoltar_Clicked"
-                                 HeightRequest="40"
-                                 WidthRequest="40"
-                                 CornerRadius="40"
-                                 Aspect="AspectFill"/>
-                </Frame>
-
                 <Label Text="Chamados"
                        FontSize="24"
                        FontAttributes="Bold"
@@ -33,7 +22,6 @@
                 <HorizontalStackLayout Margin="0,10">
                     <Label Text="Status:" VerticalOptions="Center" FontAttributes="Bold"/>
                     <Picker x:Name="StatusPicker"
-                            Title="Selecionar"
                             WidthRequest="180"
                             SelectedIndex="0"
                             SelectedIndexChanged="StatusPicker_SelectedIndexChanged">

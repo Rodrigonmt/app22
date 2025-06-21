@@ -6,7 +6,6 @@
     <Grid>
         <VerticalStackLayout VerticalOptions="Start">
             <HorizontalStackLayout Spacing="80" HorizontalOptions="Center">
-                <Button ImageSource="voltar.png" BackgroundColor="Transparent" WidthRequest="60" x:Name="Desconnectar" Clicked="ImageButton_Clicked"/>
                 <Button Text="Tirar Foto do Equipamento"
                     Clicked="BtnTirarFoto_Clicked"
                     Margin="0,10,0,0" />

@@ -195,10 +195,6 @@ public partial class ChamadosAdm : ContentPage
         }
     }
 
-    private async void BTNVoltar_Clicked(object sender, EventArgs e)
-    {
-        App.Current.MainPage = new NavegarMenus(_usuarioretornar);
-    }
     private void StatusPicker_SelectedIndexChanged(object sender, EventArgs e)
     {
         string statusSelecionado = StatusPicker.SelectedItem?.ToString();

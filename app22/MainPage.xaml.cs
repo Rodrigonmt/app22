@@ -59,12 +59,6 @@ namespace app22
         {
             lbl_boasvindas.Text = $"Bem vindo(a) " + _usuarioLog;
         }
-        
-        private void ImageButton_Clicked(object sender, EventArgs e)
-        {
-            // Ação ao clicar (por exemplo, voltar)
-            App.Current.MainPage = new NavegarMenus(_usuarioLog);
-        }
 
         private void MarcarBotao_Clicked(object sender, EventArgs e)
         {

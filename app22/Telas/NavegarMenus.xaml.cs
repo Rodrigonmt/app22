@@ -36,12 +36,12 @@ public partial class NavegarMenus : ContentPage
 
     private async void OnCriarChamadoClicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new MainPage(_usuarioLogado);
+        await Navigation.PushAsync(new MainPage(_usuarioLogado));
     }
 
     private async void OnHistoricoClicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new Chamados(_usuarioLogado);
+        await Navigation.PushAsync(new Chamados(_usuarioLogado));
     }
 
     private async void OnVenderClicked(object sender, EventArgs e)
@@ -56,22 +56,11 @@ public partial class NavegarMenus : ContentPage
 
     private async void OnAlterarCadastroClicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new AlteraCadastro(_usuarioLogado);
+        await Navigation.PushAsync(new AlteraCadastro(_usuarioLogado));
     }
 
-    private async void Desconnectar_Clicked(object sender, EventArgs e)
+    private async void OnChamadosAdm(object sender, EventArgs e)
     {
-        bool conf = await DisplayAlert("Tem certeza?", "Sair do app", "Sim", "Não");
-        if (conf)
-        {
-            SecureStorage.Default.Remove("usuario_logado");
-            App.Current.MainPage = new Login();
-        }
-    }
-
-
-    private void OnChamadosAdm(object sender, EventArgs e)
-    {
-        App.Current.MainPage = new ChamadosAdm(_usuarioLogado);
+        await Navigation.PushAsync(new Chamados(_usuarioLogado));
     }
 }

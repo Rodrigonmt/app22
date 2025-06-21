@@ -22,21 +22,19 @@ public partial class Chamados : ContentPage
         CarregarChamadosAsync();
     }
 
-    private async void VerDetalhesChamado_Clicked(object sender, EventArgs e)
-    {
-        App.Current.MainPage = new ChamadoDetalhes();
-    }
-
     private async void ChamadosCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         try
         {
-            App.Current.MainPage = new ChamadoDetalhes();
+            if (e.CurrentSelection.FirstOrDefault() is Chamado chamadoSelecionado)
+            {
+                await Navigation.PushAsync(new ChamadoDetalhes(chamadoSelecionado.Id));
+                ChamadosCollectionView.SelectedItem = null;
+            }
         }
         catch (Exception ex)
         {
-
-            DisplayAlert("Erro", ex.Message, "Ok");
+            await DisplayAlert("Erro", ex.Message, "OK");
         }
     }
 
@@ -132,7 +130,7 @@ public partial class Chamados : ContentPage
 
     private async void BTNVoltar_Clicked(object sender, EventArgs e)
     {
-        App.Current.MainPage = new NavegarMenus(_usuarioLogado);
+        await Navigation.PushAsync(new NavegarMenus(_usuarioLogado));
     }
     private void StatusPicker_SelectedIndexChanged(object sender, EventArgs e)
     {

@@ -91,15 +91,4 @@ public partial class AlteraCadastro : ContentPage
 
     }
 
-    private void BTNVoltar_Clicked(object sender, EventArgs e)
-    {
-        if (_usuarioLogado != null)
-        {
-            App.Current.MainPage = new NavegarMenus(_usuarioLogado);
-        }
-        else
-        {
-            App.Current.MainPage = new Login();
-        }
-    }
 }
