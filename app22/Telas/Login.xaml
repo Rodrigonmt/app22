@@ -41,7 +41,7 @@
                         BackgroundColor="Transparent"
                         TextColor="Black"
                         x:Name="TXTUsuario"
-                        Text="Amanda"/>
+                        Text="Luiz"/>
                 </Border>
                 <Label Text="Senha"
                     FontAttributes="Bold"
@@ -55,7 +55,7 @@
                         Placeholder="Digite sua senha"
                         BackgroundColor="Transparent"
                         x:Name="TXTSenha"
-                        Text="123"/>
+                        Text="123456"/>
                 </Border>
                 <Button WidthRequest="260" HeightRequest="40" Text="Entrar" HorizontalOptions="Center" Margin="0,8,0,8" x:Name="BTN_Entrar_Login" Clicked="BTN_Entrar_Login_Clicked"/>
                 <HorizontalStackLayout Margin="10">

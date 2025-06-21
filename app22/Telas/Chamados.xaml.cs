@@ -128,10 +128,6 @@ public partial class Chamados : ContentPage
         }
     }
 
-    private async void BTNVoltar_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new NavegarMenus(_usuarioLogado));
-    }
     private void StatusPicker_SelectedIndexChanged(object sender, EventArgs e)
     {
         string statusSelecionado = StatusPicker.SelectedItem?.ToString();

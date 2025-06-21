@@ -61,6 +61,6 @@ public partial class NavegarMenus : ContentPage
 
     private async void OnChamadosAdm(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Chamados(_usuarioLogado));
+        await Navigation.PushAsync(new ChamadosAdm(_usuarioLogado));
     }
 }

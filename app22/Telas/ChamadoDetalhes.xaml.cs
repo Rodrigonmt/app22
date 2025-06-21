@@ -8,11 +8,16 @@ public partial class ChamadoDetalhes : ContentPage
     {
         InitializeComponent();
         _idChamado = idChamado;
+        alteramsg();
 
         // Aqui você pode carregar os dados do Firebase com o ID
 
     }
 
+    public async void alteramsg()
+    {
+        Msg.Text = _idChamado;
+    }
     
 
 }

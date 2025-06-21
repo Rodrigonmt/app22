@@ -32,6 +32,8 @@ public partial class ChamadosAdm : ContentPage
         _usuarioretornar = usuarlogretorn;
     }
 
+
+
     private async Task InicializarDadosAsync()
     {
         await CarregarUsuariosAsync(); // Isso define "Todos" como padrão
@@ -243,6 +245,22 @@ public partial class ChamadosAdm : ContentPage
         {
             _userlog = usuarioSelecionado;
             await CarregarChamadosAsync();
+        }
+    }
+
+    private async void ChamadosCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            if (e.CurrentSelection.FirstOrDefault() is Chamado chamadoSelecionado)
+            {
+                await Navigation.PushAsync(new ChamadoDetalhes(chamadoSelecionado.Id));
+                ChamadosCollectionView.SelectedItem = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", ex.Message, "OK");
         }
     }
 }

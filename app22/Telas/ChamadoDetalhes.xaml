@@ -5,6 +5,6 @@
              BackgroundColor="White"
              Padding="20">
     <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
-        <Label Text="Teste" FontSize="60"/>
+        <Label Text="Teste" FontSize="60" x:Name="Msg"/>
     </ScrollView>
 </ContentPage>

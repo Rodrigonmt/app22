@@ -4,7 +4,6 @@
              xmlns:sys="clr-namespace:System;assembly=netstandard"
              x:Class="app22.Telas.ChamadosAdm"
              xmlns:conv="clr-namespace:app22.Classes"
-             Title="ChamadosAdm"
              BackgroundColor="#f8f9fa">
 
     <ContentPage.Resources>
@@ -99,7 +98,9 @@
         <CollectionView x:Name="ChamadosCollectionView"
                     Grid.Row="1"
                     VerticalOptions="FillAndExpand"
-                    Margin="0,10">
+                        Margin="0,10"
+                        SelectionMode="Single"
+                        SelectionChanged="ChamadosCollectionView_SelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
