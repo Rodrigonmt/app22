@@ -5,16 +5,16 @@
 
     <Grid>
         <VerticalStackLayout VerticalOptions="Start">
-            <HorizontalStackLayout Spacing="80" HorizontalOptions="Center">
+            <VerticalStackLayout Padding="10" HorizontalOptions="Center">
                 <Button Text="Tirar Foto do Equipamento"
-                    Clicked="BtnTirarFoto_Clicked"
-                    Margin="0,10,0,0" />
-                <Image x:Name="ImagemEquipamentoPreview"
-                   HeightRequest="150"
-                   Aspect="AspectFill"
-                   IsVisible="False" />
-            </HorizontalStackLayout>
-            
+            Clicked="BtnTirarFoto_Clicked"
+            HorizontalOptions="Center" />
+                <Frame HeightRequest="150" WidthRequest="150" IsVisible="False" x:Name="FrameImagemPreview" Padding="0">
+                    <Image x:Name="ImagemEquipamentoPreview"
+               Aspect="AspectFill" />
+                </Frame>
+            </VerticalStackLayout>
+
             <Frame BorderColor="Transparent" BackgroundColor="Transparent">
                 <VerticalStackLayout Padding="0,0,0,0" Margin="0,0,0,0">
                     <Border StrokeThickness="2" WidthRequest="350" HeightRequest="40" Opacity="0.8" BackgroundColor="lightgray">

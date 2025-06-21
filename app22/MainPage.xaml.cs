@@ -4,6 +4,13 @@ using app22.Telas;
 using app22.Classes;
 using Microsoft.Maui.Platform;
 
+#if ANDROID
+using Android;
+using Android.Content.PM;
+using AndroidX.Core.Content;
+using AndroidX.Core.App;
+#endif
+
 /*Status serviços
 Pendente
 Em Andamento
@@ -21,6 +28,7 @@ namespace app22
         private FileResult _fotoArquivo;
         private Button botaoSelecionado;
         public string? _usuarioLog = null;//variavel aceita valor null com o ?
+
         public MainPage(string _usuarioLogado)
         {
             InitializeComponent();
@@ -31,6 +39,16 @@ namespace app22
 
         private async void BtnTirarFoto_Clicked(object sender, EventArgs e)
         {
+            #if ANDROID
+                var status = ContextCompat.CheckSelfPermission(Android.App.Application.Context, Manifest.Permission.Camera);
+                if (status != Permission.Granted)
+                {
+                    ActivityCompat.RequestPermissions(Platform.CurrentActivity!, new string[] { Manifest.Permission.Camera }, 0);
+                    await DisplayAlert("Permissão", "Permissão para usar a câmera é necessária.", "OK");
+                    return;
+                }
+            #endif
+
             try
             {
                 if (MediaPicker.Default.IsCaptureSupported)
@@ -40,8 +58,11 @@ namespace app22
                     if (_fotoArquivo != null)
                     {
                         var stream = await _fotoArquivo.OpenReadAsync();
+
+                        // ✅ Aqui aplica a imagem no controle com layout ajustado
                         ImagemEquipamentoPreview.Source = ImageSource.FromStream(() => stream);
                         ImagemEquipamentoPreview.IsVisible = true;
+                        FrameImagemPreview.IsVisible = true;
                     }
                 }
                 else
