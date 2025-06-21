@@ -10,9 +10,5 @@ namespace app22
             MainPage = new NavigationPage(new Login());
         }
 
-        //protected override Window CreateWindow(IActivationState? activationState)
-        //{
-        //    return new Window(new NavigationPage(new Login()));
-        //}
     }
 }
