@@ -104,15 +104,27 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
-                        <VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ChamadosCollectionView}}"
+                                CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
+
+                        <VerticalStackLayout Spacing="4">
+
                             <HorizontalStackLayout>
-                                <Label Text="Equipamento:" FontAttributes="Bold" FontSize="16" WidthRequest="120"/>
-                                <Label Text="{Binding Equipamento}" FontSize="16"/>
+                                <Label Text="Usuário:" FontAttributes="Bold" FontSize="14" WidthRequest="120"/>
+                                <Label Text="{Binding Usuario}" FontSize="14"/>
                             </HorizontalStackLayout>
 
                             <HorizontalStackLayout>
-                                <Label Text="Status:" FontAttributes="Bold" FontSize="16" WidthRequest="120"/>
-                                <Label Text="{Binding Status}" FontSize="16" TextColor="Gray" FontAttributes="Bold"/>
+                                <Label Text="Equipamento:" FontAttributes="Bold" FontSize="14" WidthRequest="120"/>
+                                <Label Text="{Binding Equipamento}" FontSize="14"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Status:" FontAttributes="Bold" FontSize="14" WidthRequest="120"/>
+                                <Label Text="{Binding Status}" FontSize="14" FontAttributes="Bold" TextColor="Gray"/>
                             </HorizontalStackLayout>
 
                             <HorizontalStackLayout>
@@ -129,7 +141,7 @@
                                 <Label Text="Data Criação:" FontAttributes="Bold" FontSize="14" WidthRequest="120"/>
                                 <Label Text="{Binding DataAtual}" FontSize="14" TextColor="Gray"/>
                             </HorizontalStackLayout>
-                            
+
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>

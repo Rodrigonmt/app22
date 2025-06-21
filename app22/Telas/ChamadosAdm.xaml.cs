@@ -15,10 +15,11 @@ public partial class ChamadosAdm : ContentPage
     private string _usuarioretornar;
     private ObservableCollection<Chamado> _todosChamados = new ObservableCollection<Chamado>();
     private List<string> _usuariosDisponiveis = new List<string>();
+    public Command<Chamado> ItemTappedCommand { get; }
     public ChamadosAdm(string usuarlogretorn)
 	{
         InitializeComponent();
-
+        BindingContext = this; // Isso é necessário para o Command funcionar corretamente
         StatusPicker.SelectedIndex = 0;
         EquipamentoPicker.SelectedIndex = 0;
 
@@ -30,6 +31,14 @@ public partial class ChamadosAdm : ContentPage
         // ? Primeiro carrega os usuários e então os chamados
         _ = InicializarDadosAsync();
         _usuarioretornar = usuarlogretorn;
+
+        ItemTappedCommand = new Command<Chamado>(async (chamado) =>
+        {
+            if (chamado != null)
+            {
+                await Navigation.PushAsync(new ChamadoDetalhes(chamado.Id));
+            }
+        });
     }
 
 
