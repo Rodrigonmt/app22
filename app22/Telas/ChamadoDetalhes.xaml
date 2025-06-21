@@ -4,7 +4,54 @@
              x:Class="app22.Telas.ChamadoDetalhes"
              BackgroundColor="White"
              Padding="20">
-    <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
-        <Label Text="Teste" FontSize="60" x:Name="Msg"/>
+    <ScrollView>
+        <StackLayout Spacing="15">
+
+            <Image x:Name="FotoChamadoImage"
+                   HeightRequest="200"
+                   Aspect="AspectFill"
+                   BackgroundColor="LightGray" />
+
+            <Label Text="Equipamento:" FontAttributes="Bold"/>
+            <Label x:Name="EquipamentoLabel"/>
+
+            <Label Text="Usuário:" FontAttributes="Bold"/>
+            <Label x:Name="UsuarioLabel"/>
+
+            <Label Text="Data Agendamento:" FontAttributes="Bold"/>
+            <Label x:Name="DataAgendamentoLabel"/>
+
+            <Label Text="Hora Agendamento:" FontAttributes="Bold"/>
+            <Label x:Name="HoraAgendamentoLabel"/>
+
+            <Label Text="Data Criação:" FontAttributes="Bold"/>
+            <Label x:Name="DataCriacaoLabel"/>
+
+            <Label Text="Hora Criação:" FontAttributes="Bold"/>
+            <Label x:Name="HoraCriacaoLabel"/>
+
+            <Label Text="Status:" FontAttributes="Bold"/>
+            <Picker x:Name="StatusPicker"
+                    IsEnabled="False">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Pendente</x:String>
+                        <x:String>Em Andamento</x:String>
+                        <x:String>Coleta efetuada</x:String>
+                        <x:String>Concluído</x:String>
+                        <x:String>Cancelado</x:String>
+                        <x:String>Reagendado</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Button x:Name="SalvarButton"
+                    Text="Salvar Status"
+                    IsVisible="False"
+                    Clicked="SalvarButton_Clicked"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    CornerRadius="10"/>
+        </StackLayout>
     </ScrollView>
 </ContentPage>
