@@ -57,7 +57,11 @@ public partial class ChamadoDetalhes : ContentPage
 
                         if (!string.IsNullOrWhiteSpace(chamado.Value.FotoEquipamento))
                         {
-                            FotoChamadoImage.Source = ImageSource.FromUri(new Uri(chamado.Value.FotoEquipamento));
+                            if (!string.IsNullOrWhiteSpace(chamado.Value.FotoEquipamento))
+                            {
+                                byte[] imagemBytes = Convert.FromBase64String(chamado.Value.FotoEquipamento);
+                                FotoChamadoImage.Source = ImageSource.FromStream(() => new MemoryStream(imagemBytes));
+                            }
                         }
 
                         // Permitir edição para Rodrigo ou Rafael

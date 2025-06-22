@@ -2,6 +2,8 @@
 using Microsoft.Maui.Controls;
 using app22.Telas;
 using app22.Classes;
+using SkiaSharp;
+using SkiaSharp.Views.Maui.Controls;
 using Microsoft.Maui.Platform;
 
 #if ANDROID
@@ -111,15 +113,28 @@ namespace app22
 
             if (_fotoArquivo != null)
             {
-                using var stream = await _fotoArquivo.OpenReadAsync();
+                using var originalStream = await _fotoArquivo.OpenReadAsync();
+
+                // Redimensionar/comprimir a imagem com SkiaSharp
                 using var memoryStream = new MemoryStream();
-                await stream.CopyToAsync(memoryStream);
+                using var bitmap = SKBitmap.Decode(originalStream);
+
+                // Reduz o tamanho para largura máxima de 800px mantendo proporção
+                int targetWidth = 400;
+                int targetHeight = (int)((double)bitmap.Height / bitmap.Width * targetWidth);
+
+                using var resizedBitmap = bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), SKFilterQuality.Medium);
+                using var image = SKImage.FromBitmap(resizedBitmap);
+                using var data = image.Encode(SKEncodedImageFormat.Jpeg, 25); // 50 = qualidade JPEG (0-100)
+
+                data.SaveTo(memoryStream);
+
                 base64Image = Convert.ToBase64String(memoryStream.ToArray());
             }
 
-            if (botaoSelecionado==null)
+            if (botaoSelecionado == null)
             {
-                DisplayAlert("Erro", "Favor selecionar o equipamento com defeito", "Ok");
+                await DisplayAlert("Erro", "Favor selecionar o equipamento com defeito", "Ok");
                 return;
             }
 
@@ -156,13 +171,12 @@ namespace app22
                 await firebaseService.SalvarAgendamentoAsync(userId, agendamento);
 
                 await DisplayAlert("Sucesso", "Agendamento salvo com sucesso!", "OK");
-                App.Current.MainPage = new Chamados(_usuarioLog);
+                await Navigation.PushAsync(new Chamados(_usuarioLog));
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Erro", $"Falha ao salvar: {ex.Message}", "OK");
             }
-
 
         }
 
