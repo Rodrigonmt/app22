@@ -119,13 +119,13 @@ namespace app22
                 using var memoryStream = new MemoryStream();
                 using var bitmap = SKBitmap.Decode(originalStream);
 
-                // Reduz o tamanho para largura máxima de 800px mantendo proporção
+                // Reduz o tamanho para largura máxima de 400px mantendo proporção
                 int targetWidth = 400;
                 int targetHeight = (int)((double)bitmap.Height / bitmap.Width * targetWidth);
 
                 using var resizedBitmap = bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), SKFilterQuality.Medium);
                 using var image = SKImage.FromBitmap(resizedBitmap);
-                using var data = image.Encode(SKEncodedImageFormat.Jpeg, 25); // 50 = qualidade JPEG (0-100)
+                using var data = image.Encode(SKEncodedImageFormat.Jpeg, 25); // 25 = qualidade JPEG (0-100)
 
                 data.SaveTo(memoryStream);
 
