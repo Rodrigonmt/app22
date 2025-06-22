@@ -55,12 +55,20 @@ public partial class ChamadoDetalhes : ContentPage
                         HoraCriacaoLabel.Text = chamado.Value.HoraAtual;
                         StatusPicker.SelectedItem = chamado.Value.Status;
 
-                        if (!string.IsNullOrWhiteSpace(chamado.Value.FotoEquipamento))
+                        if (chamado.Value.FotosEquipamento != null && chamado.Value.FotosEquipamento.Count > 0)
                         {
-                            if (!string.IsNullOrWhiteSpace(chamado.Value.FotoEquipamento))
+                            if (_chamadoAtual.FotosEquipamento != null && _chamadoAtual.FotosEquipamento.Count > 0)
                             {
-                                byte[] imagemBytes = Convert.FromBase64String(chamado.Value.FotoEquipamento);
-                                FotoChamadoImage.Source = ImageSource.FromStream(() => new MemoryStream(imagemBytes));
+                                var imagens = new List<ImageSource>();
+
+                                foreach (var fotoBase64 in _chamadoAtual.FotosEquipamento)
+                                {
+                                    byte[] imagemBytes = Convert.FromBase64String(fotoBase64);
+                                    var imagemStream = new MemoryStream(imagemBytes);
+                                    imagens.Add(ImageSource.FromStream(() => imagemStream));
+                                }
+
+                                FotosCollectionView.ItemsSource = imagens;
                             }
                         }
 

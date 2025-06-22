@@ -30,6 +30,8 @@ namespace app22
         private FileResult _fotoArquivo;
         private Button botaoSelecionado;
         public string? _usuarioLog = null;//variavel aceita valor null com o ?
+        private List<FileResult> _fotosArquivos = new();
+        private const int MaxFotos = 5;
 
         public MainPage(string _usuarioLogado)
         {
@@ -53,16 +55,29 @@ namespace app22
 
             try
             {
+                if (_fotosArquivos.Count >= MaxFotos)
+                {
+                    await DisplayAlert("Limite atingido", $"Você pode tirar no máximo {MaxFotos} fotos.", "OK");
+                    return;
+                }
+
                 if (MediaPicker.Default.IsCaptureSupported)
                 {
-                    _fotoArquivo = await MediaPicker.Default.CapturePhotoAsync();
+                    var foto = await MediaPicker.Default.CapturePhotoAsync();
 
-                    if (_fotoArquivo != null)
+                    if (foto != null)
                     {
-                        var stream = await _fotoArquivo.OpenReadAsync();
+                        _fotosArquivos.Add(foto);
 
-                        // ✅ Aqui aplica a imagem no controle com layout ajustado
-                        ImagemEquipamentoPreview.Source = ImageSource.FromStream(() => stream);
+                        // Mostrar a última foto tirada
+                        using var stream = await foto.OpenReadAsync();
+                        using var memoryStream = new MemoryStream();
+                        await stream.CopyToAsync(memoryStream);
+                        memoryStream.Position = 0;
+
+                        // Copia para um novo stream que o ImageSource pode usar depois
+                        var imageStreamCopy = new MemoryStream(memoryStream.ToArray());
+                        ImagemEquipamentoPreview.Source = ImageSource.FromStream(() => imageStreamCopy);
                         ImagemEquipamentoPreview.IsVisible = true;
                         FrameImagemPreview.IsVisible = true;
                     }
@@ -109,27 +124,29 @@ namespace app22
 
         private async void BTNAgendar_Clicked(object sender, EventArgs e)
         {
-            string base64Image = null;
+            List<string> listaFotosBase64 = new();
 
-            if (_fotoArquivo != null)
+            foreach (var foto in _fotosArquivos)
             {
-                using var originalStream = await _fotoArquivo.OpenReadAsync();
-
-                // Redimensionar/comprimir a imagem com SkiaSharp
+                using var originalStream = await foto.OpenReadAsync();
                 using var memoryStream = new MemoryStream();
-                using var bitmap = SKBitmap.Decode(originalStream);
+                await originalStream.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
 
-                // Reduz o tamanho para largura máxima de 400px mantendo proporção
-                int targetWidth = 400;
-                int targetHeight = (int)((double)bitmap.Height / bitmap.Width * targetWidth);
+                using var bitmap = SKBitmap.Decode(memoryStream);
+
+                int targetWidth = (int)(bitmap.Width * 0.2);
+                int targetHeight = (int)(bitmap.Height * 0.2);
 
                 using var resizedBitmap = bitmap.Resize(new SKImageInfo(targetWidth, targetHeight), SKFilterQuality.Medium);
                 using var image = SKImage.FromBitmap(resizedBitmap);
-                using var data = image.Encode(SKEncodedImageFormat.Jpeg, 25); // 25 = qualidade JPEG (0-100)
+                using var data = image.Encode(SKEncodedImageFormat.Jpeg, 60);
 
-                data.SaveTo(memoryStream);
+                using var resizedStream = new MemoryStream();
+                data.SaveTo(resizedStream);
 
-                base64Image = Convert.ToBase64String(memoryStream.ToArray());
+                string base64 = Convert.ToBase64String(resizedStream.ToArray());
+                listaFotosBase64.Add(base64);
             }
 
             if (botaoSelecionado == null)
@@ -164,7 +181,7 @@ namespace app22
                     DataAtual = dataAtual,
                     HoraAtual = horaAtual,
                     Status = "Pendente",
-                    FotoEquipamento = base64Image
+                    FotosEquipamento = listaFotosBase64 // ✅ aqui vai a lista
                 };
 
                 var firebaseService = new FirebaseService();
