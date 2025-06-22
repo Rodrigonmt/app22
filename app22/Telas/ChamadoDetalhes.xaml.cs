@@ -19,6 +19,25 @@ public partial class ChamadoDetalhes : ContentPage
         CarregarDadosChamadoPorIdAsync();
     }
 
+    private async void Imagem_Tapped(object sender, EventArgs e)
+    {
+        if (sender is Image image && image.Source != null)
+        {
+            await Navigation.PushModalAsync(new FotoTelaCheia(image.Source));
+        }
+    }
+
+    private async void FotosCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is ImageSource imagemSelecionada)
+        {
+            await Navigation.PushModalAsync(new FotoTelaCheia(imagemSelecionada));
+        }
+
+        // Limpa a seleção para permitir reabrir se a mesma imagem for clicada de novo
+        FotosCollectionView.SelectedItem = null;
+    }
+
     private async void CarregarDadosChamadoPorIdAsync()
     {
         try
@@ -64,8 +83,7 @@ public partial class ChamadoDetalhes : ContentPage
                                 foreach (var fotoBase64 in _chamadoAtual.FotosEquipamento)
                                 {
                                     byte[] imagemBytes = Convert.FromBase64String(fotoBase64);
-                                    var imagemStream = new MemoryStream(imagemBytes);
-                                    imagens.Add(ImageSource.FromStream(() => imagemStream));
+                                    imagens.Add(ImageSource.FromStream(() => new MemoryStream(imagemBytes)));
                                 }
 
                                 FotosCollectionView.ItemsSource = imagens;

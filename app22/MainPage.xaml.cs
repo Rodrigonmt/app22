@@ -41,6 +41,37 @@ namespace app22
             
         }
 
+        private async Task TirarFotosSequencialAsync()
+        {
+            while (_fotosArquivos.Count < MaxFotos)
+            {
+                var foto = await MediaPicker.Default.CapturePhotoAsync();
+
+                if (foto == null)
+                    break; // usuário cancelou
+
+                _fotosArquivos.Add(foto);
+
+                // Mostrar a prévia da última
+                using var stream = await foto.OpenReadAsync();
+                using var memoryStream = new MemoryStream();
+                await stream.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
+                var streamCopia = new MemoryStream(memoryStream.ToArray());
+                ImagemEquipamentoPreview.Source = ImageSource.FromStream(() => streamCopia);
+                ImagemEquipamentoPreview.IsVisible = true;
+                FrameImagemPreview.IsVisible = true;
+
+                // Pergunta ao usuário se deseja continuar
+                bool continuar = await DisplayAlert("Foto capturada",
+                                                    $"Você tirou {_fotosArquivos.Count}/{MaxFotos} fotos.\nDeseja tirar outra?",
+                                                    "Sim", "Não");
+                if (!continuar)
+                    break;
+            }
+        }
+
+
         private async void BtnTirarFoto_Clicked(object sender, EventArgs e)
         {
             #if ANDROID
@@ -55,37 +86,13 @@ namespace app22
 
             try
             {
-                if (_fotosArquivos.Count >= MaxFotos)
+                if (!MediaPicker.Default.IsCaptureSupported)
                 {
-                    await DisplayAlert("Limite atingido", $"Você pode tirar no máximo {MaxFotos} fotos.", "OK");
+                    await DisplayAlert("Erro", "Captura de imagem não suportada neste dispositivo.", "OK");
                     return;
                 }
 
-                if (MediaPicker.Default.IsCaptureSupported)
-                {
-                    var foto = await MediaPicker.Default.CapturePhotoAsync();
-
-                    if (foto != null)
-                    {
-                        _fotosArquivos.Add(foto);
-
-                        // Mostrar a última foto tirada
-                        using var stream = await foto.OpenReadAsync();
-                        using var memoryStream = new MemoryStream();
-                        await stream.CopyToAsync(memoryStream);
-                        memoryStream.Position = 0;
-
-                        // Copia para um novo stream que o ImageSource pode usar depois
-                        var imageStreamCopy = new MemoryStream(memoryStream.ToArray());
-                        ImagemEquipamentoPreview.Source = ImageSource.FromStream(() => imageStreamCopy);
-                        ImagemEquipamentoPreview.IsVisible = true;
-                        FrameImagemPreview.IsVisible = true;
-                    }
-                }
-                else
-                {
-                    await DisplayAlert("Erro", "Captura de imagem não suportada neste dispositivo.", "OK");
-                }
+                await TirarFotosSequencialAsync();
             }
             catch (Exception ex)
             {
