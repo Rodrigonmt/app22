@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="app22.Telas.ComprarProdutos"
-             Title="ComprarProdutos">
+             x:Class="app22.Telas.ComprarProdutos">
+
     <ScrollView>
-        <StackLayout x:Name="ProdutosStack" Padding="10" Spacing="20" />
+        <StackLayout Padding="10" Spacing="15">
+
+            <!-- Filtros -->
+            <Frame BorderColor="LightGray" Padding="10" CornerRadius="10">
+                <StackLayout Spacing="10">
+                    <Entry x:Name="FiltroNomeProduto" Placeholder="Filtrar por nome do produto" />
+                    <Entry x:Name="FiltroNomeVendedor" Placeholder="Filtrar por nome do vendedor" />
+
+                    <Picker x:Name="FiltroEstado" Title="Condição do produto">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Todos</x:String>
+                                <x:String>Novo</x:String>
+                                <x:String>Usado</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Entry x:Name="FiltroValorMin" Placeholder="Valor mín" Keyboard="Numeric" WidthRequest="120"/>
+                        <Entry x:Name="FiltroValorMax" Placeholder="Valor máx" Keyboard="Numeric" WidthRequest="120"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <DatePicker x:Name="FiltroDataIni" Format="dd/MM/yyyy" />
+                        <DatePicker x:Name="FiltroDataFim" Format="dd/MM/yyyy" />
+                    </StackLayout>
+
+                    <Button Text="Aplicar Filtros" Clicked="AplicarFiltros_Clicked" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Loader (mantido) -->
+            <StackLayout x:Name="LoaderStack" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+                <ActivityIndicator x:Name="Loader" IsRunning="True" IsVisible="True" Color="DarkGray" WidthRequest="40" HeightRequest="40" />
+                <Label Text="Carregando produtos..." FontAttributes="Italic" TextColor="Gray" />
+            </StackLayout>
+
+            <!-- Lista de Produtos -->
+            <StackLayout x:Name="ProdutosStack" IsVisible="False" Spacing="20" />
+
+        </StackLayout>
     </ScrollView>
+
 </ContentPage>
