@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="app22.Telas.AnunciarProduto"
+             BackgroundColor="#f4f4f4">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Fotos do Produto -->
+            <Label Text="Fotos do Produto (até 5)" FontAttributes="Bold"/>
+            <HorizontalStackLayout x:Name="FotoStack" Spacing="10">
+                <!-- Botões de adicionar fotos serão adicionados no code-behind -->
+            </HorizontalStackLayout>
+
+            <!-- Nome do Produto -->
+            <Entry x:Name="NomeProdutoEntry" Placeholder="Nome do Produto"/>
+
+            <!-- Nome do Vendedor -->
+            <Entry x:Name="NomeVendedorEntry" Placeholder="Nome do Vendedor"/>
+
+            <!-- Marca -->
+            <Entry x:Name="MarcaEntry" Placeholder="Marca"/>
+
+            <!-- Descrição -->
+            <Editor x:Name="DescricaoEditor" Placeholder="Descrição detalhada" HeightRequest="100"/>
+
+            <!-- Estado: Novo ou Usado -->
+            <HorizontalStackLayout>
+                <Label Text="Estado: " VerticalOptions="Center"/>
+                <Picker x:Name="EstadoPicker" WidthRequest="150">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Novo</x:String>
+                            <x:String>Usado</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </HorizontalStackLayout>
+
+            <!-- Valor -->
+            <Entry x:Name="ValorEntry" Placeholder="Valor de venda" Keyboard="Numeric"/>
+
+            <!-- Telefone -->
+            <Entry x:Name="TelefoneEntry" Placeholder="Telefone para contato" Keyboard="Telephone"/>
+
+            <!-- Botão Publicar -->
+            <Button Text="Publicar Anúncio" 
+                    Clicked="OnPublicarClicked"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    CornerRadius="10"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

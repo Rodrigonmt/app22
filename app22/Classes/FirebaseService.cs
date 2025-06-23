@@ -20,6 +20,33 @@ namespace app22.Classes
             _httpClient = new HttpClient();
         }
 
+        public async Task<List<Produto>> ObterProdutosAsync()
+        {
+            var response = await _httpClient.GetAsync($"{FirebaseUrl}/produtos.json");
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Erro ao buscar produtos");
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            var dict = JsonSerializer.Deserialize<Dictionary<string, Produto>>(json);
+            return dict?.Values.ToList() ?? new List<Produto>();
+        }
+
+        public async Task EnviarProdutoAsync(Produto produto)
+        {
+            string json = JsonSerializer.Serialize(produto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // Caminho correto com "produtos"
+            var response = await _httpClient.PostAsync($"{FirebaseUrl}/produtos.json", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Erro ao enviar produto ao Firebase: " + response.StatusCode);
+            }
+        }
+
         public async Task AtualizarPessoaAsync(string usuarioAntigo, DadosUsuario pessoaAtualizada)
         {
             var response = await _httpClient.GetAsync($"{FirebaseUrl}/pessoas.json");

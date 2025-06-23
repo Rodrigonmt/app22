@@ -46,12 +46,12 @@ public partial class NavegarMenus : ContentPage
 
     private async void OnVenderClicked(object sender, EventArgs e)
     {
-        
+        await Navigation.PushAsync(new AnunciarProduto(_usuarioLogado));
     }
 
     private async void OnComprarClicked(object sender, EventArgs e)
     {
-        
+        await Navigation.PushAsync(new ComprarProdutos());
     }
 
     private async void OnAlterarCadastroClicked(object sender, EventArgs e)
