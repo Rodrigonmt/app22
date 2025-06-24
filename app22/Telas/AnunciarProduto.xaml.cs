@@ -18,6 +18,21 @@ public partial class AnunciarProduto : ContentPage
         AdicionarBotaoAdicionarFoto();
     }
 
+    private void LimparFormulario()
+    {
+        NomeProdutoEntry.Text = string.Empty;
+        NomeVendedorEntry.Text = string.Empty;
+        MarcaEntry.Text = string.Empty;
+        DescricaoEditor.Text = string.Empty;
+        EstadoPicker.SelectedItem = null;
+        ValorEntry.Text = string.Empty;
+        TelefoneEntry.Text = string.Empty;
+
+        _fotos.Clear();
+        FotoStack.Children.Clear();
+        AdicionarBotaoAdicionarFoto(); // Reinsere o botão de tirar fotos
+    }
+
     private void AdicionarBotaoAdicionarFoto()
     {
         var botao = new Button
@@ -124,6 +139,7 @@ public partial class AnunciarProduto : ContentPage
             var firebaseService = new FirebaseService();
             await firebaseService.EnviarProdutoAsync(produto);
             await DisplayAlert("Sucesso", "Produto anunciado com sucesso!", "OK");
+            LimparFormulario(); // Limpa a tela após sucesso
         }
         catch (Exception ex)
         {
