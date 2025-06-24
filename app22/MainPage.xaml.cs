@@ -37,7 +37,7 @@ namespace app22
         {
             InitializeComponent();
             _usuarioLog = _usuarioLogado;
-            atualizarBoasVindas();
+            
             
         }
 
@@ -100,10 +100,7 @@ namespace app22
             }
         }
 
-        private void atualizarBoasVindas()
-        {
-            lbl_boasvindas.Text = $"Bem vindo(a) " + _usuarioLog;
-        }
+        
 
         private void MarcarBotao_Clicked(object sender, EventArgs e)
         {

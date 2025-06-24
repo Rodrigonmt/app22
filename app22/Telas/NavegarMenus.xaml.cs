@@ -8,11 +8,9 @@ public partial class NavegarMenus : ContentPage
         
         InitializeComponent();
         _usuarioLogado = usuariologado;
-        CarregarUsuarioAsync();
-
+        CarregarUsuarioAsync(); // já chama AtualizarMensagem internamente
 
     }
-
     private async void CarregarUsuarioAsync()
     {
         // Atualiza a saudação

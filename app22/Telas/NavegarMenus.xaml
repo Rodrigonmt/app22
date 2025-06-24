@@ -4,17 +4,33 @@
              x:Class="app22.Telas.NavegarMenus">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="25">
-            <HorizontalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center" Spacing="10">
-                <Label Text="Bem-vindo(a)"
-                   FontSize="26"
-                   FontAttributes="Bold"
-                   TextColor="#2c3e50"
-                   LineBreakMode="TailTruncation"
-                   HorizontalOptions="Start"
-                   x:Name="BemVindoLabel"
-                   VerticalOptions="Center"
-                   WidthRequest="{OnPlatform Android=320, iOS=300, WinUI=400}" />
-            </HorizontalStackLayout>
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <Label 
+                    x:Name="BemVindoLabel"
+                    Text="Bem-vindo(a)"
+                    FontSize="22"
+                    FontAttributes="Bold"
+                    TextColor="#2c3e50"
+                    HorizontalTextAlignment="Center"/>
+
+                <Frame
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    CornerRadius="60"
+                    Padding="0"
+                    HasShadow="False"
+                    BorderColor="Gray"
+                    HorizontalOptions="Center"
+                    IsClippedToBounds="True">
+                    <ImageButton
+                        Source="user01.png"
+                        BackgroundColor="Transparent"
+                        Aspect="AspectFill"
+                        WidthRequest="100"
+                        HeightRequest="100"
+                        CornerRadius="60"/>
+                </Frame>
+            </StackLayout>
 
 
 

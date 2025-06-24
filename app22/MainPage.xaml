@@ -15,40 +15,6 @@
                 </Frame>
             </HorizontalStackLayout>
 
-            <Frame BorderColor="Transparent" BackgroundColor="Transparent">
-                <VerticalStackLayout Padding="0,0,0,0" Margin="0,0,0,0">
-                    <Border StrokeThickness="2" WidthRequest="350" HeightRequest="40" Opacity="0.8" BackgroundColor="lightgray">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="25"/>
-                        </Border.StrokeShape>
-                        <Label 
-                            x:Name="lbl_boasvindas"
-                            HorizontalTextAlignment="Center"
-                            FontSize="20"
-                            TextColor="Black"/>
-                    </Border>
-                        <Frame
-                            WidthRequest="100"
-                            HeightRequest="100"
-                            CornerRadius="60"
-                            Padding="0"
-                            HasShadow="False"
-                            BorderColor="Gray"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            IsClippedToBounds="True">
-
-                        <ImageButton
-                            x:Name="FotoUsuario"
-                            Source="user01.png"
-                            BackgroundColor="Transparent"
-                            Aspect="AspectFill"
-                            WidthRequest="100"
-                            HeightRequest="100"
-                            CornerRadius="60"/>
-                    </Frame>
-                        </VerticalStackLayout>
-                    </Frame>
             <Border>
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10" />
