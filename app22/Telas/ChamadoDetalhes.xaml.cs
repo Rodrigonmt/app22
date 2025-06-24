@@ -11,6 +11,7 @@ public partial class ChamadoDetalhes : ContentPage
     private string _usuarioLogado;
     private string _usuarioDonoDoChamado;
     private AgendamentoModel _chamadoAtual;
+    private List<string> _fotosBase64 = new();
     public ChamadoDetalhes(string idChamado)
     {
         InitializeComponent();
@@ -19,22 +20,18 @@ public partial class ChamadoDetalhes : ContentPage
         CarregarDadosChamadoPorIdAsync();
     }
 
-    private async void Imagem_Tapped(object sender, EventArgs e)
-    {
-        if (sender is Image image && image.Source != null)
-        {
-            await Navigation.PushModalAsync(new FotoTelaCheia(image.Source));
-        }
-    }
-
     private async void FotosCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.FirstOrDefault() is ImageSource imagemSelecionada)
         {
-            await Navigation.PushModalAsync(new FotoTelaCheia(imagemSelecionada));
+            int index = FotosCollectionView.ItemsSource.Cast<ImageSource>().ToList().IndexOf(imagemSelecionada);
+
+            if (index >= 0)
+            {
+                await Navigation.PushModalAsync(new FotoTelaCheia(_fotosBase64, index));
+            }
         }
 
-        // Limpa a seleção para permitir reabrir se a mesma imagem for clicada de novo
         FotosCollectionView.SelectedItem = null;
     }
 
@@ -65,7 +62,7 @@ public partial class ChamadoDetalhes : ContentPage
                         _usuarioDonoDoChamado = usuario.Key;
                         _chamadoAtual = chamado.Value;
 
-                        // Preencher UI
+                        // Preencher dados na UI
                         EquipamentoLabel.Text = chamado.Value.Equipamento;
                         UsuarioLabel.Text = usuario.Key;
                         DataAgendamentoLabel.Text = chamado.Value.DataSelecionada;
@@ -74,23 +71,23 @@ public partial class ChamadoDetalhes : ContentPage
                         HoraCriacaoLabel.Text = chamado.Value.HoraAtual;
                         StatusPicker.SelectedItem = chamado.Value.Status;
 
-                        if (chamado.Value.FotosEquipamento != null && chamado.Value.FotosEquipamento.Count > 0)
+                        // Fotos
+                        _fotosBase64 = chamado.Value.FotosEquipamento ?? new List<string>();
+
+                        if (_fotosBase64.Count > 0)
                         {
-                            if (_chamadoAtual.FotosEquipamento != null && _chamadoAtual.FotosEquipamento.Count > 0)
+                            var imagens = new List<ImageSource>();
+
+                            foreach (var fotoBase64 in _fotosBase64)
                             {
-                                var imagens = new List<ImageSource>();
-
-                                foreach (var fotoBase64 in _chamadoAtual.FotosEquipamento)
-                                {
-                                    byte[] imagemBytes = Convert.FromBase64String(fotoBase64);
-                                    imagens.Add(ImageSource.FromStream(() => new MemoryStream(imagemBytes)));
-                                }
-
-                                FotosCollectionView.ItemsSource = imagens;
+                                byte[] imagemBytes = Convert.FromBase64String(fotoBase64);
+                                imagens.Add(ImageSource.FromStream(() => new MemoryStream(imagemBytes)));
                             }
+
+                            FotosCollectionView.ItemsSource = imagens;
                         }
 
-                        // Permitir edição para Rodrigo ou Rafael
+                        // Permitir edição apenas para usuários específicos
                         if (_usuarioLogado == "Rodrigo" || _usuarioLogado == "Rafael")
                         {
                             StatusPicker.IsEnabled = true;

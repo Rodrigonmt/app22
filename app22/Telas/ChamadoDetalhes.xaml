@@ -22,7 +22,7 @@
                    WidthRequest="150"
                    Source="{Binding .}">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="Imagem_Tapped"/>
+                                    <!--<TapGestureRecognizer Tapped="Imagem_Tapped"/>-->
                                 </Image.GestureRecognizers>
                             </Image>
                         </Frame>

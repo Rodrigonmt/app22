@@ -5,19 +5,31 @@
              Title="FotoTelaCheia"
              BackgroundColor="Black">
     <Grid>
-        <Image x:Name="ImagemTelaCheia"
-               Aspect="AspectFit"
-               VerticalOptions="Center"
-               HorizontalOptions="Center" />
-        <Button Text="Fechar"
-                BackgroundColor="White"
-                TextColor="Black"
-                CornerRadius="20"
-                WidthRequest="100"
-                HeightRequest="40"
-                VerticalOptions="End"
-                HorizontalOptions="Center"
-                Margin="0,20"
-                Clicked="Fechar_Clicked"/>
+        <!-- Imagem com suporte a zoom por gesto de pinça -->
+        <ScrollView>
+            <Image x:Name="ImagemTelaCheia"
+                   Aspect="AspectFit"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center">
+                <Image.GestureRecognizers>
+                    <PinchGestureRecognizer PinchUpdated="OnPinchUpdated"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </ScrollView>
+
+        <!-- Botões navegação -->
+        <Grid RowDefinitions="Auto" VerticalOptions="End" Margin="0,0,0,30">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
+                <Button Text="◀" Clicked="Anterior_Clicked"
+                        WidthRequest="60" HeightRequest="40"
+                        BackgroundColor="White" TextColor="Black"/>
+                <Button Text="Fechar" Clicked="Fechar_Clicked"
+                        WidthRequest="100" HeightRequest="40"
+                        BackgroundColor="White" TextColor="Black"/>
+                <Button Text="▶" Clicked="Proxima_Clicked"
+                        WidthRequest="60" HeightRequest="40"
+                        BackgroundColor="White" TextColor="Black"/>
+            </StackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

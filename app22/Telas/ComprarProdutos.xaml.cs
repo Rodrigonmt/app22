@@ -68,29 +68,43 @@ public partial class ComprarProdutos : ContentPage
         if (fotosBase64 == null || fotosBase64.Count == 0)
             return layout;
 
-        foreach (var base64 in fotosBase64)
+        for (int i = 0; i < fotosBase64.Count; i++)
         {
+            var base64 = fotosBase64[i];
+
             try
             {
                 byte[] bytes = Convert.FromBase64String(base64);
                 ImageSource imgSrc = ImageSource.FromStream(() => new MemoryStream(bytes));
 
-                layout.Children.Add(new Image
+                var img = new Image
                 {
                     Source = imgSrc,
                     WidthRequest = 80,
                     HeightRequest = 80,
                     Aspect = Aspect.AspectFill
-                });
+                };
+
+                int index = i; // necessário para capturar corretamente o índice
+
+                var tapGesture = new TapGestureRecognizer();
+                tapGesture.Tapped += async (s, e) =>
+                {
+                    await Navigation.PushModalAsync(new FotoTelaCheia(fotosBase64, index));
+                };
+                img.GestureRecognizers.Add(tapGesture);
+
+                layout.Children.Add(img);
             }
             catch
             {
-                // Ignora imagens inválidas
+                // Ignora imagem inválida
             }
         }
 
         return layout;
     }
+
 
     private void AplicarFiltros_Clicked(object sender, EventArgs e)
     {
