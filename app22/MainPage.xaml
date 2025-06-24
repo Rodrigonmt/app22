@@ -3,232 +3,182 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="app22.MainPage">
 
-    <Grid>
-        <VerticalStackLayout VerticalOptions="Start">
-            <HorizontalStackLayout Padding="2" HorizontalOptions="Center">
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="15" HorizontalOptions="Center">
+
+            <!-- Botão de tirar foto + preview -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
                 <Button Text="Tirar Foto do Equipamento"
-                    Clicked="BtnTirarFoto_Clicked"
-                    HorizontalOptions="Center" />
+                        Clicked="BtnTirarFoto_Clicked"
+                        HorizontalOptions="Center"/>
                 <Frame HeightRequest="50" WidthRequest="50" IsVisible="False" x:Name="FrameImagemPreview" Padding="0">
-                    <Image x:Name="ImagemEquipamentoPreview"
-               Aspect="AspectFill" />
+                    <Image x:Name="ImagemEquipamentoPreview" Aspect="AspectFill"/>
                 </Frame>
             </HorizontalStackLayout>
 
-            <!-- Miniaturas das fotos -->
+            <!-- Miniaturas (sempre reservando espaço) -->
             <CollectionView x:Name="MiniaturasCollection"
-                    ItemsLayout="HorizontalList"
-                    HeightRequest="100"
-                    Margin="0,10,0,10"
-                    IsVisible="False">
+                            ItemsLayout="HorizontalList"
+                            HeightRequest="100"
+                            IsVisible="True">
+                <CollectionView.EmptyView>
+                    <Label Text="Nenhuma foto tirada ainda." HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Italic"/>
+                </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Padding="2" Margin="5" HasShadow="False" BorderColor="Gray" CornerRadius="10" WidthRequest="80" HeightRequest="80">
-                            <Image Source="{Binding}" Aspect="AspectFill" WidthRequest="80" HeightRequest="80"/>
+                            <Image Source="{Binding}" Aspect="AspectFill"/>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Border>
+            <!-- Título -->
+            <Border StrokeThickness="1" Stroke="#ccc" Padding="10">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10" />
+                    <RoundRectangle CornerRadius="10"/>
                 </Border.StrokeShape>
-                <Label Text="Selecione o equipamento com defeito" FontSize="18" HorizontalOptions="Center"/>
+                <Label Text="Selecione o equipamento com defeito"
+                       FontSize="18"
+                       HorizontalOptions="Center"/>
             </Border>
-            
-            <HorizontalStackLayout Padding="10" Spacing="29">
-                <VerticalStackLayout>
-                    <Label Text="Geladeira" HorizontalOptions="Center" FontSize="18"/>
-                    <Border 
-                        WidthRequest="100" 
-                        HeightRequest="100"
-                        StrokeThickness="2"
-                        BackgroundColor="Transparent">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
 
-                        <Grid>
-                            <Image
-                                Source="geladeira.jpg"
-                                Aspect="AspectFill" />
+            <!-- Equipamentos em FlexLayout responsivo -->
+            <FlexLayout Wrap="Wrap"
+                        Direction="Row"
+                        JustifyContent="Center"
+                        AlignItems="Start"
+                        AlignContent="Start"
+                        Margin="0,10">
 
-                            <Button
-                                BackgroundColor="Transparent"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center"
-                                Padding="10"
-                                Text="Geladeira"
-                                TextColor="Transparent"
-                                x:Name="BTNGeladeira"
-                                Clicked="MarcarBotao_Clicked"/>
-                        </Grid>
-                    </Border>
-                </VerticalStackLayout>
-                <VerticalStackLayout>
-                    <Label Text="Lava-roupa" HorizontalOptions="Center" FontSize="18"/>
-                    <Border 
-                        WidthRequest="100" 
-                        HeightRequest="100"
-                        StrokeThickness="2"
-                        BackgroundColor="Transparent">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
+                <!-- Geladeira -->
+                <HorizontalStackLayout>
+                    <VerticalStackLayout WidthRequest="100" Margin="10" Spacing="5" HorizontalOptions="Center">
+                        <Label Text="Geladeira" FontSize="14" HorizontalOptions="Center"/>
+                        <Border WidthRequest="100" HeightRequest="100" StrokeThickness="2" BackgroundColor="Transparent">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image Source="geladeira.jpg" Aspect="AspectFill"/>
+                                <Button BackgroundColor="Transparent"
+                    Text="Geladeira"
+                    TextColor="Transparent"
+                    x:Name="BTNGeladeira"
+                    Clicked="MarcarBotao_Clicked"/>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
 
-                        <Grid>
-                            <Image
-                        Source="maquina.jpg"
-                        Aspect="AspectFill" />
+                    <!-- Lava-roupa -->
+                    <VerticalStackLayout WidthRequest="100" Margin="10" Spacing="5" HorizontalOptions="Center">
+                        <Label Text="Lava-roupa" FontSize="14" HorizontalOptions="Center"/>
+                        <Border WidthRequest="100" HeightRequest="100" StrokeThickness="2" BackgroundColor="Transparent">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image Source="maquina.jpg" Aspect="AspectFill"/>
+                                <Button BackgroundColor="Transparent"
+                    Text="Maquina de Lavar"
+                    TextColor="Transparent"
+                    x:Name="BTNLavadeira"
+                    Clicked="MarcarBotao_Clicked"/>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
 
-                            <Button
-                                BackgroundColor="Transparent"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center"
-                                Padding="10"
-                                Text="Maquina de Lavar"
-                                TextColor="Transparent"
-                                x:Name="BTNLavadeira"
-                                Clicked="MarcarBotao_Clicked"/>
-                        </Grid>
-                    </Border>
-                </VerticalStackLayout>
+                    <!-- Forno -->
+                    <VerticalStackLayout WidthRequest="100" Margin="10" Spacing="5" HorizontalOptions="Center">
+                        <Label Text="Forno" FontSize="14" HorizontalOptions="Center"/>
+                        <Border WidthRequest="100" HeightRequest="100" StrokeThickness="2" BackgroundColor="Transparent">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image Source="forno.jpg" Aspect="AspectFill"/>
+                                <Button BackgroundColor="Transparent"
+                    Text="Forno"
+                    TextColor="Transparent"
+                    x:Name="BTNForno"
+                    Clicked="MarcarBotao_Clicked"/>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout>
+                    <!-- Freezer -->
+                    <VerticalStackLayout WidthRequest="100" Margin="10" Spacing="5" HorizontalOptions="Center">
+                        <Label Text="Freezer" FontSize="14" HorizontalOptions="Center"/>
+                        <Border WidthRequest="100" HeightRequest="100" StrokeThickness="2" BackgroundColor="Transparent">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image Source="congelador.jpg" Aspect="AspectFill"/>
+                                <Button BackgroundColor="Transparent"
+                    Text="Congelador"
+                    TextColor="Transparent"
+                    x:Name="BTNCongelador"
+                    Clicked="MarcarBotao_Clicked"/>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Ar-condicionado -->
+                    <VerticalStackLayout WidthRequest="100" Margin="10" Spacing="5" HorizontalOptions="Center">
+                        <Label Text="Ar-Condicion." FontSize="14" HorizontalOptions="Center"/>
+                        <Border WidthRequest="100" HeightRequest="100" StrokeThickness="2" BackgroundColor="Transparent">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image Source="arcondicionado.jpg" Aspect="AspectFill"/>
+                                <Button BackgroundColor="Transparent"
+                    Text="Ar-condicion."
+                    TextColor="Transparent"
+                    x:Name="BTNArcondicionado"
+                    Clicked="MarcarBotao_Clicked"/>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Outros -->
+                    <VerticalStackLayout WidthRequest="100" Margin="10" Spacing="5" HorizontalOptions="Center">
+                        <Label Text="Outros" FontSize="14" HorizontalOptions="Center"/>
+                        <Border WidthRequest="100" HeightRequest="100" StrokeThickness="2" BackgroundColor="Transparent">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image Source="outros.jpg" Aspect="AspectFill"/>
+                                <Button BackgroundColor="Transparent"
+                    Text="Outros"
+                    TextColor="Transparent"
+                    x:Name="BTNOutros"
+                    Clicked="MarcarBotao_Clicked"/>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
                 
-                <VerticalStackLayout>
-                    <Label Text="Forno" HorizontalOptions="Center" FontSize="18"/>
-                    <Border 
-                       WidthRequest="100" 
-                       HeightRequest="100"
-                       StrokeThickness="2"
-                       BackgroundColor="Transparent">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
+            </FlexLayout>
 
-                        <Grid>
-                            <Image
-                               Source="forno.jpg"
-                               Aspect="AspectFill" />
+            <!-- Agendamento -->
+            <VerticalStackLayout Spacing="8" WidthRequest="280">
+                <Label Text="Selecione a data do agendamento:" FontSize="16"/>
+                <DatePicker x:Name="DataAgendamento"/>
 
-                            <Button 
-                               BackgroundColor="Transparent"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               Padding="10"
-                               Text="Forno"
-                               TextColor="Transparent"
-                               x:Name="BTNForno"
-                               Clicked="MarcarBotao_Clicked"/>
-                        </Grid>
-                    </Border>
-                </VerticalStackLayout>
- 
-            </HorizontalStackLayout>
-
-            <HorizontalStackLayout Padding="10" Spacing="7">
-                <VerticalStackLayout>
-                    <Label Text="Freezer" HorizontalOptions="Center" FontSize="18"/>
-                    <Border 
-                        WidthRequest="100" 
-                        HeightRequest="100"
-                        StrokeThickness="2"
-                        BackgroundColor="Transparent">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-
-                        <Grid>
-                            <Image
-                                Source="congelador.jpg"
-                                Aspect="AspectFill" />
-
-                            <Button 
-                                BackgroundColor="Transparent"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center"
-                                Padding="10"
-                                Text="Congelador"
-                                TextColor="Transparent"
-                                x:Name="BTNCongelador"
-                                Clicked="MarcarBotao_Clicked"/>
-                        </Grid>
-                    </Border>
-
-                </VerticalStackLayout>
-                
-                <VerticalStackLayout>
-                    <Label Text="Ar-Condicionado" HorizontalOptions="Center" FontSize="18"/>
-                    <Border 
-                        WidthRequest="100" 
-                        HeightRequest="100"
-                        StrokeThickness="2"
-                        BackgroundColor="Transparent">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-
-                        <Grid>
-                            <Image
-                                Source="arcondicionado.jpg"
-                                Aspect="AspectFill" />
-
-                            <Button 
-                                BackgroundColor="Transparent"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center"
-                                Padding="10"
-                                Text="Ar condicionado"
-                                TextColor="Transparent"
-                                x:Name="BTNArcondicionado"
-                                Clicked="MarcarBotao_Clicked"/>
-                        </Grid>
-                    </Border>
-                </VerticalStackLayout>
-                
-                <VerticalStackLayout>
-                    <Label Text="Outros" HorizontalOptions="Center" FontSize="18"/>
-                    <Border 
-                        WidthRequest="100" 
-                        HeightRequest="100"
-                        StrokeThickness="2"
-                        BackgroundColor="Transparent">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-
-                        <Grid>
-                            <Image
-                                Source="outros.jpg"
-                                Aspect="AspectFill" />
-
-                            <Button 
-                                BackgroundColor="Transparent"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Start"
-                                Padding="10"
-                                Text="Outros"
-                                TextColor="Transparent"
-                                x:Name="BTNOutros"
-                                Clicked="MarcarBotao_Clicked"/>
-                        </Grid>
-                    </Border>
-                </VerticalStackLayout>
-                
-            </HorizontalStackLayout>
-            <VerticalStackLayout Padding="20" Spacing="0">
-                <Label Text="Selecione a data do agendamento:" FontSize="18" />
-                <DatePicker x:Name="DataAgendamento" />
-
-                <Label Text="Selecione o horário:" FontSize="18" />
-                <TimePicker x:Name="HoraAgendamento" />
+                <Label Text="Selecione o horário:" FontSize="16"/>
+                <TimePicker x:Name="HoraAgendamento"/>
 
                 <Button Text="CONFIRMAR" Margin="0,10,0,0" Clicked="BTNAgendar_Clicked"/>
             </VerticalStackLayout>
+
         </VerticalStackLayout>
-        
-    </Grid>
-    
+    </ScrollView>
+
 
 
 </ContentPage>
