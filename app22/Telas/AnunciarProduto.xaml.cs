@@ -1,6 +1,7 @@
 using app22.Classes;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
+using SkiaSharp;
 //using Microsoft.Maui.Essentials;
 
 namespace app22.Telas;
@@ -83,12 +84,25 @@ public partial class AnunciarProduto : ContentPage
         {
             if (foto != null)
             {
-                using var stream = await foto.OpenReadAsync();
+                using var originalStream = await foto.OpenReadAsync();
                 using var memoryStream = new MemoryStream();
-                await stream.CopyToAsync(memoryStream);
-                var bytes = memoryStream.ToArray();
-                var base64 = Convert.ToBase64String(bytes);
-                fotosBase64.Add(base64);
+                await originalStream.CopyToAsync(memoryStream);
+                var imageBytes = memoryStream.ToArray();
+
+                using var input = SKBitmap.Decode(imageBytes);
+
+                int targetWidth = 800;
+                int targetHeight = (int)(input.Height * (800.0 / input.Width));
+
+                using var resizedBitmap = input.Resize(new SKImageInfo(targetWidth, targetHeight), SKFilterQuality.Medium);
+
+                if (resizedBitmap != null)
+                {
+                    using var image = SKImage.FromBitmap(resizedBitmap);
+                    using var data = image.Encode(SKEncodedImageFormat.Jpeg, 70); // Qualidade: 0–100
+                    var resizedBase64 = Convert.ToBase64String(data.ToArray());
+                    fotosBase64.Add(resizedBase64);
+                }
             }
         }
 
