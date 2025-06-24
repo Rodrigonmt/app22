@@ -5,6 +5,7 @@ using app22.Classes;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
 using Microsoft.Maui.Platform;
+using System.Collections.ObjectModel;
 
 #if ANDROID
 using Android;
@@ -32,6 +33,7 @@ namespace app22
         public string? _usuarioLog = null;//variavel aceita valor null com o ?
         private List<FileResult> _fotosArquivos = new();
         private const int MaxFotos = 5;
+        private ObservableCollection<ImageSource> _miniaturas = new();
 
         public MainPage(string _usuarioLogado)
         {
@@ -61,6 +63,12 @@ namespace app22
                 ImagemEquipamentoPreview.Source = ImageSource.FromStream(() => streamCopia);
                 ImagemEquipamentoPreview.IsVisible = true;
                 FrameImagemPreview.IsVisible = true;
+                // Atualiza miniaturas
+                streamCopia.Position = 0; // resetar posição
+                ImageSource imagemMiniatura = ImageSource.FromStream(() => new MemoryStream(streamCopia.ToArray()));
+                _miniaturas.Add(imagemMiniatura);
+                MiniaturasCollection.ItemsSource = _miniaturas;
+                MiniaturasCollection.IsVisible = true;
 
                 // Pergunta ao usuário se deseja continuar
                 bool continuar = await DisplayAlert("Foto capturada",

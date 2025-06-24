@@ -15,6 +15,21 @@
                 </Frame>
             </HorizontalStackLayout>
 
+            <!-- Miniaturas das fotos -->
+            <CollectionView x:Name="MiniaturasCollection"
+                    ItemsLayout="HorizontalList"
+                    HeightRequest="100"
+                    Margin="0,10,0,10"
+                    IsVisible="False">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="2" Margin="5" HasShadow="False" BorderColor="Gray" CornerRadius="10" WidthRequest="80" HeightRequest="80">
+                            <Image Source="{Binding}" Aspect="AspectFill" WidthRequest="80" HeightRequest="80"/>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
             <Border>
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10" />
