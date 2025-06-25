@@ -36,6 +36,11 @@
                 </Border.StrokeShape>
                 <Entry x:Name="senhaConf" Placeholder="Confirme sua senha" FontSize="20" HorizontalOptions="Center" PlaceholderColor="Black" VerticalOptions="Center"/>
             </Border>
+            <Button Text="Tirar Foto de Perfil"
+                Clicked="BtnFotoPerfil_Clicked"
+                WidthRequest="180"
+                Opacity="0.8"
+                HorizontalOptions="Center"/>
             <Button Text="CADASTRAR" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" WidthRequest="180" Opacity="0.8" x:Name="BTNCadastro" Clicked="BTNCadastro_Clicked"/>
         </VerticalStackLayout>
     </Grid>

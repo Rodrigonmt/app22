@@ -1,3 +1,5 @@
+using app22.Classes;
+
 namespace app22.Telas;
 
 public partial class NavegarMenus : ContentPage
@@ -13,18 +15,18 @@ public partial class NavegarMenus : ContentPage
     }
     private async void CarregarUsuarioAsync()
     {
-        // Atualiza a saudação
         AtualizarMensagem();
 
-        // Mostra o botão apenas para Luiz ou Rodrigo
-        if (_usuarioLogado == "Luiz" || _usuarioLogado == "Rodrigo")
+        var firebase = new FirebaseService();
+        var usuario = await firebase.BuscarPessoaPorNomeAsync(_usuarioLogado);
+
+        if (usuario?.fotoBase64 != null)
         {
-            ChamadosAdmFrame.IsVisible = true;
+            var imageBytes = Convert.FromBase64String(usuario.fotoBase64);
+            ImagemUsuario.Source = ImageSource.FromStream(() => new MemoryStream(imageBytes));
         }
-        else
-        {
-            ChamadosAdmFrame.IsVisible = false;
-        }
+
+        ChamadosAdmFrame.IsVisible = (_usuarioLogado == "Luiz" || _usuarioLogado == "Rodrigo");
     }
 
     private void AtualizarMensagem()

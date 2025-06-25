@@ -5,6 +5,7 @@ namespace app22.Telas;
 public partial class Cadastro : ContentPage
 {
     //private readonly string _usuarioLogado = nomeEntry.Text;
+    private FileResult _fotoUsuario;
     public Cadastro()
 	{
 		InitializeComponent();
@@ -15,6 +16,20 @@ public partial class Cadastro : ContentPage
     //{
     //    await DisplayAlert("Mensag", $"->{_usuarioLogado}<-", "Ok");
     //}
+
+    private async void BtnFotoPerfil_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            _fotoUsuario = await MediaPicker.Default.CapturePhotoAsync();
+            if (_fotoUsuario != null)
+                await DisplayAlert("Foto Capturada", "Foto de perfil registrada com sucesso!", "OK");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", $"Falha ao tirar foto: {ex.Message}", "OK");
+        }
+    }
 
     private async void BTNCadastro_Clicked(object sender, EventArgs e)
     {
@@ -45,12 +60,22 @@ public partial class Cadastro : ContentPage
             return;
         }
 
+        string? fotoBase64 = null;
+        if (_fotoUsuario != null)
+        {
+            using var stream = await _fotoUsuario.OpenReadAsync();
+            using var memory = new MemoryStream();
+            await stream.CopyToAsync(memory);
+            fotoBase64 = Convert.ToBase64String(memory.ToArray());
+        }
+
         var pessoa = new DadosUsuario
         {
             usuario = nomeEntry.Text,
             telefone = telefoneEntry.Text,
             endereco = enderecoEntry.Text,
             senha = senhaEntry.Text,
+            fotoBase64 = fotoBase64
         };
 
         try

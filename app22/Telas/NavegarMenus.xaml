@@ -23,6 +23,7 @@
                     HorizontalOptions="Center"
                     IsClippedToBounds="True">
                     <ImageButton
+                        x:Name="ImagemUsuario"
                         Source="user01.png"
                         BackgroundColor="Transparent"
                         Aspect="AspectFill"

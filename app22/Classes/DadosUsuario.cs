@@ -12,5 +12,6 @@ namespace app22.Classes
         public string telefone { get; set; }
         public string endereco { get; set; }
         public string senha { get; set; }
+        public string? fotoBase64 { get; set; }
     }
 }
