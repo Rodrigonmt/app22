@@ -9,9 +9,6 @@
             <!-- Botão de tirar foto + preview -->
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
                 <Button x:Name="BtnTirarFoto" Text="Tirar Foto do Equipamento" Clicked="BtnTirarFoto_Clicked" HorizontalOptions="Center"/>
-                <Frame HeightRequest="50" WidthRequest="50" IsVisible="False" x:Name="FrameImagemPreview" Padding="0">
-                    <Image x:Name="ImagemEquipamentoPreview" Aspect="AspectFill"/>
-                </Frame>
             </HorizontalStackLayout>
 
             <!-- Miniaturas (sempre reservando espaço) -->

@@ -58,9 +58,6 @@ namespace app22
                 await stream.CopyToAsync(memoryStream);
                 memoryStream.Position = 0;
                 var streamCopia = new MemoryStream(memoryStream.ToArray());
-                ImagemEquipamentoPreview.Source = ImageSource.FromStream(() => streamCopia);
-                ImagemEquipamentoPreview.IsVisible = true;
-                FrameImagemPreview.IsVisible = true;
                 // Atualiza miniaturas
                 streamCopia.Position = 0; // resetar posição
                 ImageSource imagemMiniatura = ImageSource.FromStream(() => new MemoryStream(streamCopia.ToArray()));
@@ -218,10 +215,6 @@ namespace app22
             _miniaturas.Clear();
             MiniaturasCollection.ItemsSource = _miniaturas;
             MiniaturasCollection.IsVisible = false;
-
-            ImagemEquipamentoPreview.Source = null;
-            ImagemEquipamentoPreview.IsVisible = false;
-            FrameImagemPreview.IsVisible = false;
 
             if (botaoSelecionado != null)
             {
