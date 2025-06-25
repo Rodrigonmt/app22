@@ -12,8 +12,7 @@
                 ItemsLayout="HorizontalList"
                 HeightRequest="200"
                 Margin="0,5,0,10"
-                SelectionMode="Single"
-                SelectionChanged="FotosCollectionView_SelectionChanged">
+                SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Padding="2" Margin="5" BorderColor="Gray" HasShadow="False" CornerRadius="10">
@@ -22,7 +21,8 @@
                    WidthRequest="150"
                    Source="{Binding .}">
                                 <Image.GestureRecognizers>
-                                    <!--<TapGestureRecognizer Tapped="Imagem_Tapped"/>-->
+                                    <TapGestureRecognizer Tapped="Imagem_Tapped"
+                                          CommandParameter="{Binding .}" />
                                 </Image.GestureRecognizers>
                             </Image>
                         </Frame>

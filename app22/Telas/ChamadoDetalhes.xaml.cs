@@ -35,6 +35,37 @@ public partial class ChamadoDetalhes : ContentPage
         FotosCollectionView.SelectedItem = null;
     }
 
+    private async void Imagem_Tapped(object sender, EventArgs e)
+    {
+        if (sender is Image image && image.GestureRecognizers.FirstOrDefault() is TapGestureRecognizer tap)
+        {
+            var imagemSource = tap.CommandParameter as ImageSource;
+
+            if (imagemSource != null)
+            {
+                // Identifica o índice da imagem base64 correspondente
+                int index = -1;
+
+                for (int i = 0; i < _fotosBase64.Count; i++)
+                {
+                    var bytes = Convert.FromBase64String(_fotosBase64[i]);
+                    var source = ImageSource.FromStream(() => new MemoryStream(bytes));
+
+                    if (imagemSource.ToString() == source.ToString())
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+                if (index >= 0)
+                {
+                    await Navigation.PushModalAsync(new FotoTelaCheia(_fotosBase64, index));
+                }
+            }
+        }
+    }
+
     private async void CarregarDadosChamadoPorIdAsync()
     {
         try
