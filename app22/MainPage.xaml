@@ -4,13 +4,11 @@
              x:Class="app22.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="15" HorizontalOptions="Center">
+        <VerticalStackLayout x:Name="LayoutRoot" Padding="10" Spacing="15" HorizontalOptions="Center">
 
             <!-- Botão de tirar foto + preview -->
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                <Button Text="Tirar Foto do Equipamento"
-                        Clicked="BtnTirarFoto_Clicked"
-                        HorizontalOptions="Center"/>
+                <Button x:Name="BtnTirarFoto" Text="Tirar Foto do Equipamento" Clicked="BtnTirarFoto_Clicked" HorizontalOptions="Center"/>
                 <Frame HeightRequest="50" WidthRequest="50" IsVisible="False" x:Name="FrameImagemPreview" Padding="0">
                     <Image x:Name="ImagemEquipamentoPreview" Aspect="AspectFill"/>
                 </Frame>
@@ -173,7 +171,7 @@
                 <Label Text="Selecione o horário:" FontSize="16"/>
                 <TimePicker x:Name="HoraAgendamento"/>
 
-                <Button Text="CONFIRMAR" Margin="0,10,0,0" Clicked="BTNAgendar_Clicked"/>
+                <Button x:Name="BTNAgendar" Text="CONFIRMAR" Margin="0,10,0,0" Clicked="BTNAgendar_Clicked"/>
             </VerticalStackLayout>
 
         </VerticalStackLayout>

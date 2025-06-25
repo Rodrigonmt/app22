@@ -4,7 +4,6 @@ using app22.Telas;
 using app22.Classes;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
-using Microsoft.Maui.Platform;
 using System.Collections.ObjectModel;
 
 #if ANDROID
@@ -39,8 +38,7 @@ namespace app22
         {
             InitializeComponent();
             _usuarioLog = _usuarioLogado;
-            
-            
+
         }
 
         private async Task TirarFotosSequencialAsync()
@@ -208,6 +206,95 @@ namespace app22
             }
 
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            LimparTela();
+        }
+        private void LimparTela()
+        {
+            _fotosArquivos.Clear();
+            _miniaturas.Clear();
+            MiniaturasCollection.ItemsSource = _miniaturas;
+            MiniaturasCollection.IsVisible = false;
+
+            ImagemEquipamentoPreview.Source = null;
+            ImagemEquipamentoPreview.IsVisible = false;
+            FrameImagemPreview.IsVisible = false;
+
+            if (botaoSelecionado != null)
+            {
+                botaoSelecionado.BackgroundColor = Colors.Transparent;
+                botaoSelecionado.HorizontalOptions = LayoutOptions.Start;
+                botaoSelecionado.VerticalOptions = LayoutOptions.Center;
+                botaoSelecionado.Padding = new Thickness(10); // ou o valor original
+                botaoSelecionado.Margin = new Thickness(5);   // ou o valor original
+            }
+
+            botaoSelecionado = null;
+
+            // Resetar botões de equipamento
+            foreach (var view in GetAllChildren(LayoutRoot))
+            {
+                if (view is Button btn &&
+                    btn != BTNAgendar &&
+                    btn != BtnTirarFoto)
+                {
+                    btn.BackgroundColor = Colors.Transparent;
+                }
+            }
+
+            // Resetar campos de data/hora
+            DataAgendamento.Date = DateTime.Today;
+            HoraAgendamento.Time = TimeSpan.Zero;
+        }
+
+
+        private IEnumerable<View> GetAllChildren(IView view)
+        {
+            if (view is Layout layout)
+            {
+                foreach (var child in layout.Children)
+                {
+                    if (child is View childView)
+                    {
+                        yield return childView;
+
+                        foreach (var descendant in GetAllChildren(childView))
+                        {
+                            yield return descendant;
+                        }
+                    }
+                }
+            }
+            else if (view is ContentView contentView && contentView.Content is View content)
+            {
+                yield return content;
+
+                foreach (var descendant in GetAllChildren(content))
+                {
+                    yield return descendant;
+                }
+            }
+            else if (view is Grid grid)
+            {
+                foreach (var child in grid.Children)
+                {
+                    if (child is View childView)
+                    {
+                        yield return childView;
+
+                        foreach (var descendant in GetAllChildren(childView))
+                        {
+                            yield return descendant;
+                        }
+                    }
+                }
+            }
+        }
+
+
 
     }
 
