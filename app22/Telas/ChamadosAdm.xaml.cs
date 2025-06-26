@@ -95,26 +95,33 @@ public partial class ChamadosAdm : ContentPage
     private async Task CarregarChamadosAsync()
     {
         _todosChamados.Clear();
+        ChamadosCollectionView.ItemsSource = null;
+
         try
         {
             string url;
+            string statusSelecionado = StatusPicker.SelectedItem?.ToString();
+            string equipamentoSelecionado = EquipamentoPicker.SelectedItem?.ToString();
+
+            DateTime? dataAgendadaIni = DataAgendadaInicio.Date;
+            DateTime? dataAgendadaFim = DataAgendadaFim.Date;
+            DateTime? dataCriacaoIni = DataCriacaoInicio.Date;
+            DateTime? dataCriacaoFim = DataCriacaoFim.Date;
 
             if (UsuarioPicker.SelectedItem?.ToString() == "Todos")
             {
-                // Buscar todos os usuários
                 url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos.json";
             }
             else
             {
-                _userlog = UsuarioPicker.SelectedItem?.ToString(); // atualiza localmente
+                _userlog = UsuarioPicker.SelectedItem?.ToString();
                 url = $"https://agendaluiz-default-rtdb.firebaseio.com/Agendamentos/{_userlog}.json";
             }
 
             var response = await _httpClient.GetStringAsync(url);
-
             if (string.IsNullOrWhiteSpace(response) || response == "null")
             {
-                await DisplayAlert("Aviso", "Nenhum chamado encontrado", "OK");
+                await DisplayAlert("Aviso", "Nenhum chamado encontrado.", "OK");
                 return;
             }
 
@@ -122,26 +129,28 @@ public partial class ChamadosAdm : ContentPage
 
             if (UsuarioPicker.SelectedItem?.ToString() == "Todos")
             {
-                foreach (var usuario in jsonDoc.RootElement.EnumerateObject())
+                foreach (var usuarioname in jsonDoc.RootElement.EnumerateObject())
                 {
-                    foreach (var usuarioname in jsonDoc.RootElement.EnumerateObject())
+                    string nomeUsuario = usuarioname.Name;
+
+                    foreach (var item in usuarioname.Value.EnumerateObject())
                     {
-                        string nomeUsuario = usuarioname.Name; // <-- Aqui capturamos o nome do usuário
+                        var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
+                        chamado.Id = item.Name;
+                        chamado.Usuario = nomeUsuario;
 
-                        foreach (var item in usuarioname.Value.EnumerateObject())
-                        {
-                            var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
-                            chamado.Id = item.Name;
-                            chamado.Usuario = nomeUsuario; // <-- Aqui atribuímos ao objeto Chamado
+                        // ?? Aplica os filtros diretamente
+                        if (!PassaFiltro(chamado, statusSelecionado, equipamentoSelecionado, dataAgendadaIni, dataAgendadaFim, dataCriacaoIni, dataCriacaoFim))
+                            continue;
 
-                            if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
-                                chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
+                        // Só converte datas se passou no filtro
+                        if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
+                            chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
 
-                            if (DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao))
-                                chamado.DataAtual = dataCriacao.ToString("dd/MM/yyyy");
+                        if (DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao))
+                            chamado.DataAtual = dataCriacao.ToString("dd/MM/yyyy");
 
-                            _todosChamados.Add(chamado);
-                        }
+                        _todosChamados.Add(chamado);
                     }
                 }
             }
@@ -151,7 +160,10 @@ public partial class ChamadosAdm : ContentPage
                 {
                     var chamado = JsonSerializer.Deserialize<Chamado>(item.Value.ToString());
                     chamado.Id = item.Name;
-                    chamado.Usuario = _userlog; // <-- Aqui também!
+                    chamado.Usuario = _userlog;
+
+                    if (!PassaFiltro(chamado, statusSelecionado, equipamentoSelecionado, dataAgendadaIni, dataAgendadaFim, dataCriacaoIni, dataCriacaoFim))
+                        continue;
 
                     if (DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada))
                         chamado.DataSelecionada = dataAgendada.ToString("dd/MM/yyyy");
@@ -164,14 +176,32 @@ public partial class ChamadosAdm : ContentPage
             }
 
             ChamadosCollectionView.ItemsSource = _todosChamados;
-
-            // Aplica o filtro conforme status selecionado
-            StatusPicker_SelectedIndexChanged(StatusPicker, EventArgs.Empty);
         }
         catch (Exception ex)
         {
             await DisplayAlert("Erro", ex.Message, "OK");
         }
+    }
+
+    private bool PassaFiltro(
+    Chamado chamado,
+    string status,
+    string equipamento,
+    DateTime? agendadaInicio,
+    DateTime? agendadaFim,
+    DateTime? criacaoInicio,
+    DateTime? criacaoFim)
+    {
+        bool statusOK = status == "Todos" || chamado.Status?.Equals(status, StringComparison.OrdinalIgnoreCase) == true;
+        bool equipamentoOK = equipamento == "Todos" || chamado.Equipamento?.Equals(equipamento, StringComparison.OrdinalIgnoreCase) == true;
+
+        bool agendadaOK = DateTime.TryParse(chamado.DataSelecionada, out DateTime dataAgendada) &&
+                          dataAgendada >= agendadaInicio && dataAgendada <= agendadaFim;
+
+        bool criacaoOK = DateTime.TryParse(chamado.DataAtual, out DateTime dataCriacao) &&
+                         criacaoInicio <= dataCriacao && dataCriacao <= criacaoFim;
+
+        return statusOK && equipamentoOK && agendadaOK && criacaoOK;
     }
 
     private void StatusPicker_SelectedIndexChanged(object sender, EventArgs e)

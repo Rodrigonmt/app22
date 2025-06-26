@@ -9,6 +9,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:StatusToEnabledConverter x:Key="StatusToEnabledConverter"/>
+            <conv:DateFormatConverter x:Key="DateFormatConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -129,7 +130,7 @@
 
                             <HorizontalStackLayout>
                                 <Label Text="Data Agendada:" FontAttributes="Bold" FontSize="14" WidthRequest="120"/>
-                                <Label Text="{Binding DataSelecionada}" FontSize="14"/>
+                                <Label Text="{Binding DataSelecionada, Converter={StaticResource DateFormatConverter}}" FontSize="14"/>
                             </HorizontalStackLayout>
 
                             <HorizontalStackLayout>
@@ -139,7 +140,7 @@
 
                             <HorizontalStackLayout>
                                 <Label Text="Data Criação:" FontAttributes="Bold" FontSize="14" WidthRequest="120"/>
-                                <Label Text="{Binding DataAtual}" FontSize="14" TextColor="Gray"/>
+                                <Label Text="{Binding DataAtual, Converter={StaticResource DateFormatConverter}}" FontSize="14" TextColor="Gray"/>
                             </HorizontalStackLayout>
 
                         </VerticalStackLayout>
