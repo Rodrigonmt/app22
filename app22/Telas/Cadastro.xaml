@@ -3,45 +3,111 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="app22.Telas.Cadastro"
              Title="Cadastro">
+
     <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
-        <Image Source="fundo4.jpg" HorizontalOptions="Fill" VerticalOptions="Fill" Opacity="0.5"/>
+        <Image Source="fundo4.jpg"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill"
+               Opacity="0.5" />
+
         <VerticalStackLayout VerticalOptions="Center" Spacing="10">
-            <Border StrokeThickness="2" WidthRequest="290" HeightRequest="60" Opacity="0.8" BackgroundColor="lightgray">
+
+            <Border StrokeThickness="2"
+                    WidthRequest="290"
+                    HeightRequest="60"
+                    Opacity="0.8"
+                    BackgroundColor="lightgray">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="25"/>
+                    <RoundRectangle CornerRadius="25" />
                 </Border.StrokeShape>
-                <Entry x:Name="nomeEntry" FontSize="20" Placeholder="Digite seu nome" PlaceholderColor="Black" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Entry x:Name="nomeEntry"
+                       FontSize="20"
+                       Placeholder="Digite seu nome"
+                       PlaceholderColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
             </Border>
-            <Border StrokeThickness="2" WidthRequest="290" HeightRequest="60" Opacity="0.8" BackgroundColor="lightgray">
+
+            <Border StrokeThickness="2"
+                    WidthRequest="290"
+                    HeightRequest="60"
+                    Opacity="0.8"
+                    BackgroundColor="lightgray">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="25"/>
+                    <RoundRectangle CornerRadius="25" />
                 </Border.StrokeShape>
-                <Entry x:Name="telefoneEntry" FontSize="20" Placeholder="Digite seu telefone" HorizontalOptions="Center" PlaceholderColor="Black" VerticalOptions="Center"/>
+                <Entry x:Name="telefoneEntry"
+                       FontSize="20"
+                       Placeholder="Digite seu telefone"
+                       PlaceholderColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextChanged="TelefoneEntry_TextChanged" />
             </Border>
-            <Border StrokeThickness="2" WidthRequest="290" HeightRequest="60" Opacity="0.8" BackgroundColor="lightgray">
+
+            <Border StrokeThickness="2"
+                    WidthRequest="290"
+                    HeightRequest="60"
+                    Opacity="0.8"
+                    BackgroundColor="lightgray">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="25"/>
+                    <RoundRectangle CornerRadius="25" />
                 </Border.StrokeShape>
-                <Entry x:Name="enderecoEntry" FontSize="20" Placeholder="Cidade, rua e número" HorizontalOptions="Center" PlaceholderColor="Black" VerticalOptions="Center"/>
+                <Entry x:Name="enderecoEntry"
+                       FontSize="20"
+                       Placeholder="Cidade, rua e número"
+                       PlaceholderColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
             </Border>
-            <Border StrokeThickness="2" WidthRequest="290" HeightRequest="60" Opacity="0.8" BackgroundColor="lightgray">
+
+            <Border StrokeThickness="2"
+                    WidthRequest="290"
+                    HeightRequest="60"
+                    Opacity="0.8"
+                    BackgroundColor="lightgray">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="25"/>
+                    <RoundRectangle CornerRadius="25" />
                 </Border.StrokeShape>
-                <Entry x:Name="senhaEntry" FontSize="20" Placeholder="Digite sua senha" HorizontalOptions="Center" PlaceholderColor="Black" VerticalOptions="Center"/>
+                <Entry x:Name="senhaEntry"
+                       FontSize="20"
+                       Placeholder="Digite sua senha"
+                       PlaceholderColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
             </Border>
-            <Border StrokeThickness="2" WidthRequest="290" HeightRequest="60" Opacity="0.8" BackgroundColor="lightgray">
+
+            <Border StrokeThickness="2"
+                    WidthRequest="290"
+                    HeightRequest="60"
+                    Opacity="0.8"
+                    BackgroundColor="lightgray">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="25"/>
+                    <RoundRectangle CornerRadius="25" />
                 </Border.StrokeShape>
-                <Entry x:Name="senhaConf" Placeholder="Confirme sua senha" FontSize="20" HorizontalOptions="Center" PlaceholderColor="Black" VerticalOptions="Center"/>
+                <Entry x:Name="senhaConf"
+                       FontSize="20"
+                       Placeholder="Confirme sua senha"
+                       PlaceholderColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
             </Border>
+
             <Button Text="Tirar Foto de Perfil"
-                Clicked="BtnFotoPerfil_Clicked"
-                WidthRequest="180"
-                Opacity="0.8"
-                HorizontalOptions="Center"/>
-            <Button Text="CADASTRAR" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" WidthRequest="180" Opacity="0.8" x:Name="BTNCadastro" Clicked="BTNCadastro_Clicked"/>
+                    Clicked="BtnFotoPerfil_Clicked"
+                    WidthRequest="180"
+                    Opacity="0.8"
+                    HorizontalOptions="Center" />
+
+            <Button x:Name="BTNCadastro"
+                    Text="CADASTRAR"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    WidthRequest="180"
+                    Opacity="0.8"
+                    TextColor="White"
+                    Clicked="BTNCadastro_Clicked" />
+
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

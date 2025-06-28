@@ -6,9 +6,11 @@ public partial class Cadastro : ContentPage
 {
     //private readonly string _usuarioLogado = nomeEntry.Text;
     private FileResult _fotoUsuario;
+    private bool _atualizandoTelefone = false;
+
     public Cadastro()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         //verificacamo();
     }
 
@@ -16,6 +18,65 @@ public partial class Cadastro : ContentPage
     //{
     //    await DisplayAlert("Mensag", $"->{_usuarioLogado}<-", "Ok");
     //}
+
+    private async void TelefoneEntry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (_atualizandoTelefone) return;
+
+        var entry = sender as Entry;
+        if (entry == null) return;
+
+        try
+        {
+            _atualizandoTelefone = true;
+
+            // Aguarda um pequeno delay para sincronizar com o input real
+            await Task.Delay(50);
+
+            // Extrai apenas números
+            string numeros = new string(entry.Text?.Where(char.IsDigit).ToArray() ?? Array.Empty<char>());
+
+            if (numeros.Length > 11)
+                numeros = numeros.Substring(0, 11);
+
+            string formatado = numeros;
+
+            if (numeros.Length <= 2)
+                formatado = $"({numeros}";
+            else if (numeros.Length <= 6)
+                formatado = $"({numeros.Substring(0, 2)}) {numeros.Substring(2)}";
+            else if (numeros.Length <= 10)
+                formatado = $"({numeros.Substring(0, 2)}) {numeros.Substring(2, 4)}-{numeros.Substring(6)}";
+            else
+                formatado = $"({numeros.Substring(0, 2)}) {numeros.Substring(2, 5)}-{numeros.Substring(7)}";
+
+            // Se mudou, atualiza o texto e reposiciona o cursor no final
+            if (entry.Text != formatado)
+            {
+                entry.TextChanged -= TelefoneEntry_TextChanged;
+                entry.Text = formatado;
+
+                // Coloca o cursor no final do texto formatado
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    try
+                    {
+                        entry.CursorPosition = formatado.Length;
+                    }
+                    catch
+                    {
+                        // Ignora qualquer erro
+                    }
+                });
+
+                entry.TextChanged += TelefoneEntry_TextChanged;
+            }
+        }
+        finally
+        {
+            _atualizandoTelefone = false;
+        }
+    }
 
     private async void BtnFotoPerfil_Clicked(object sender, EventArgs e)
     {
@@ -35,10 +96,10 @@ public partial class Cadastro : ContentPage
     {
         // Verifica se algum campo está vazio
         if (string.IsNullOrWhiteSpace(nomeEntry.Text) ||
-        string.IsNullOrWhiteSpace(telefoneEntry.Text) ||
-        string.IsNullOrWhiteSpace(enderecoEntry.Text) ||
-        string.IsNullOrWhiteSpace(senhaEntry.Text) ||
-        string.IsNullOrWhiteSpace(senhaConf.Text))
+            string.IsNullOrWhiteSpace(telefoneEntry.Text) ||
+            string.IsNullOrWhiteSpace(enderecoEntry.Text) ||
+            string.IsNullOrWhiteSpace(senhaEntry.Text) ||
+            string.IsNullOrWhiteSpace(senhaConf.Text))
         {
             await DisplayAlert("Atenção", "Por favor, preencha todos os campos antes de continuar.", "OK");
             return;
@@ -52,7 +113,7 @@ public partial class Cadastro : ContentPage
 
         var firebase = new FirebaseService();
 
-        // ?? Verifica se o usuário já está cadastrado
+        // Verifica se o usuário já está cadastrado
         var usuarioExistente = await firebase.BuscarPessoaPorNomeAsync(nomeEntry.Text);
         if (usuarioExistente != null)
         {
@@ -89,8 +150,5 @@ public partial class Cadastro : ContentPage
         {
             await DisplayAlert("Erro", ex.Message, "OK");
         }
-
-
     }
-
 }
